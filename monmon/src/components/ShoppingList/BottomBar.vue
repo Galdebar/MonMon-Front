@@ -1,8 +1,5 @@
 <template>
     <div id="add-new-item">
-        <h1>
-            ShoppingListBottom
-        </h1>
         <form name="add-item" v-on:submit.prevent="addItem">
             <input type="text" placeholder="Enter item name" v-model="newItemName">
             <select v-model="newItemCategory" >
@@ -21,24 +18,17 @@
 
 <script>
     export default {
-        name: 'ShoppingListBottom',
+        name: 'BottomBar',
+        props: {
+            categories: {}
+        },
         data() {
             return {
-                categories: [],
                 newItemName: "",
                 newItemCategory: "",
             }
         },
-        created() {
-            this.getCategories();
-        },
         methods: {
-            async getCategories() {
-                const url = "http://localhost:8080/getShoppingItemCategories";
-                let response = await fetch(url);
-                let responseObj = await response.json();
-                this.categories = responseObj;
-            },
             async addItem() {
                 const defaultUrl = "http://localhost:8080/shoppingitems";
                 const item = this.createShoppingItem();
@@ -63,16 +53,6 @@
                     isInCart: false
                 }
             },
-            getKeyByValue(value) {
-                if(value === ""){
-                    value = "Uncategorized";
-                };
-                for (let key in this.categories) {
-                    if (this.categories[key] === value) {
-                        return key;
-                    }
-                }
-            }
         }
 
     }
@@ -81,7 +61,7 @@
 <style scoped>
     #add-new-item {
         position: fixed;
-        background-color: whitesmoke;
+        background-color: grey;
         bottom: 0;
         left: 0;
         width: 100vw;

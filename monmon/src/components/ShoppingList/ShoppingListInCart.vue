@@ -5,7 +5,7 @@
         </div>
         <div class="container">
             <ShoppingItem
-                v-for="item in items"
+                v-for="item in receivedItems"
                 v-bind:shopping-item-d-t-o="item"
                 v-bind:key="item.id"
                 @refreshList="refreshList"
@@ -22,7 +22,7 @@
             ShoppingItem
         },
         props : {
-          items: Array
+          receivedItems: Array
         },
         data() {
             return {

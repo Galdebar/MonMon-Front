@@ -6,7 +6,7 @@
                 v-bind:title="categoryName"
                 v-bind:items="item"
                 v-bind:key="categoryName"
-                @refreshList="getItems"
+                @refreshList="refreshList"
         ></ShoppingListCategory>
     </div>
 </template>
@@ -19,10 +19,18 @@
         components: {
             ShoppingListCategory
         },
+        props:{
+          receivedItems: Array,
+        },
         data() {
             return {
                 items: [],
                 categories: [],
+            }
+        },
+        watch : {
+            receivedItems : function() {
+                this.items = this.receivedItems;
             }
         },
         computed: {
@@ -32,15 +40,8 @@
         },
         created() {
             this.getCategories();
-            this.getItems();
         },
         methods: {
-            async getItems() {
-                const url = "http://localhost:8080/shoppingitems/getUnmarked";
-                let response = await fetch(url);
-                let responseArray = await response.json();
-                this.items = responseArray;
-            },
             async getCategories() {
                 const url = "http://localhost:8080/getShoppingItemCategories";
                 let response = await fetch(url);
@@ -60,6 +61,9 @@
                 }
                 return categorized;
             },
+            refreshList(){
+                this.$emit("refreshList");
+            }
         }
     }
 </script>
@@ -67,6 +71,5 @@
 <style>
     #shopping-list-pending {
         margin-top: 50px;
-        padding-bottom: 150px;
     }
 </style>

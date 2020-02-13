@@ -1,40 +1,28 @@
 <template>
-  <div id="app">
-    <Header ref="header"></Header>
-    <ShoppingListMain @moveHeader="moveHeader"></ShoppingListMain>
-  </div>
+    <div id="app">
+        <MainState></MainState>
+    </div>
 </template>
 
 <script>
-import Header from "./components/Header/Header";
-import ShoppingListMain from "./components/ShoppingList/ShoppingListMain";
-import 'normalize.css';
+    import MainState from "./components/MainState";
+    import 'normalize.css';
+    import './assets/scss/GlobalComponents.scss'
 
-export default {
-  name: 'App',
-  components: {
-    Header,
-    ShoppingListMain
-  },
-  data(){
-      return{
-          passedMessage: "Passed Message"
-      }
-  },
-  methods:{
-    moveHeader(){
-      this.$refs.header.moveHeader();
-    },
-  }
-}
+    export default {
+        name: 'App',
+        components: {
+            MainState
+        }
+    }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+    #app {
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+    }
 </style>

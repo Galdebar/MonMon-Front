@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>ShoppingListTop</h1>
         <button v-on:click="moveHeader">
             <MenuIcon></MenuIcon>
         </button>
@@ -12,7 +11,7 @@
 
 
     export default {
-        name: 'ShoppingListTop',
+        name: 'TopBar',
         components: {
             MenuIcon
         },
@@ -27,6 +26,7 @@
 <style scoped>
     div {
         position: fixed;
+        background-color: grey;
         top: 0;
         left: 0;
         width: 100vw;
