@@ -1,5 +1,5 @@
 <template>
-        <h1><span>{{ text}}</span>{{text}}</h1>
+    <h1 class="logo"><span>{{ text}}</span>{{text}}</h1>
 </template>
 
 <script>
@@ -13,10 +13,16 @@
     }
 </script>
 
-<style scoped>
-    span{
-        background-color: black;
-        color: whitesmoke;
-        padding: 8px;
+<style lang="scss" scoped>
+    @import "../../assets/scss/Variables";
+
+    .logo {
+        span {
+            background-color: $default-black;
+            color: $default-white;
+            padding: $extra-small-distance;
+            border-radius: $small-distance;
+        }
     }
+
 </style>

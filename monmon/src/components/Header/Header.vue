@@ -1,70 +1,79 @@
 <template>
     <header ref="header" v-bind:class="{ hidden:isHidden }">
-        <div class="top">
-            <Logo></Logo>
-            <button v-on:click="moveHeader "><MenuIcon></MenuIcon></button>
+        <div class="top no-wrap-flex separator-bottom-dark">
+            <Logo/>
+            <button class="white" v-on:click="moveHeader ">
+                <MenuIcon/>
+            </button>
         </div>
-        <User></User>
-        <HeaderOptions></HeaderOptions>
+        <User/>
+        <HeaderOptions/>
+
     </header>
 </template>
 
 <script>
-import Logo from "./Logo.vue";
-import MenuIcon from 'vue-material-design-icons/Menu.vue';
-import HeaderOptions from "./HeaderOptions";
-import User from "./User";
+    import Logo from "./Logo.vue";
+    import MenuIcon from 'vue-material-design-icons/Menu.vue';
+    import HeaderOptions from "./HeaderOptions";
+    import User from "./User";
 
-export default {
-    name: 'Header',
-    data() {
-        return{
-            isHidden : true
-        }
-    },
-    components: {
-        Logo,
-        MenuIcon,
-        User,
-        HeaderOptions
-    },
-    methods: {
-        moveHeader(){
-            if(this.isHidden){
-                this.isHidden = false;
-            }else{
-                this.isHidden = true;
+    export default {
+        name: 'Header',
+        data() {
+            return {
+                isHidden: true,
+            }
+        },
+        components: {
+            Logo,
+            MenuIcon,
+            User,
+            HeaderOptions
+        },
+        methods: {
+            moveHeader() {
+                if (this.isHidden) {
+                    this.isHidden = false;
+                } else {
+                    this.isHidden = true;
+                    this.$emit("hideOverlay");
+                }
             }
         }
-    }
 
-}
+    }
 
 </script>
 
-<style scoped>
-    header{
-        padding: 8px;
-        background-color: aqua;
-        box-sizing: border-box;
-        width: 100vw;
+<style lang="scss" scoped>
+    @import "../../assets/scss/Variables";
+
+    header {
         height: 100vh;
-        overflow-scrolling: auto;  /*dunno about this*/
+        width: 80vw;
         position: absolute;
+        padding: 0 $default-distance;
+        box-sizing: border-box;
         top:0;
         left:0;
-        transition-duration: 0.3s;
-        z-index: 10;
+        z-index: $header-z-index;
+        transition-duration: $fast-transition;
+        background-color: $brand-green;
+        -webkit-box-shadow: 2px 0px 32px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 2px 0px 32px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 2px 0px 32px 0px rgba(0, 0, 0, 0.75);
     }
 
-    header.hidden{
-        left:-100vw;
+    header.hidden {
+        left: -100vw;
         transition-duration: 0.3s;
     }
 
-    .top{
+    .top {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: $default-distance 0;
     }
 </style>

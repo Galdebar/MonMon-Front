@@ -17,7 +17,7 @@ export async function getShoppingItemCategories(){
 }
 
 export async function updateItem(shoppingItemDTO){
-    const url = defaulturl + shoppingItemsPath + `update/{id=${shoppingItemDTO.id}`;
+    const url = defaulturl + shoppingItemsPath + `{id=${shoppingItemDTO.id}`;
     let response = await fetch(url,{
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -27,7 +27,7 @@ export async function updateItem(shoppingItemDTO){
 }
 
 export async function deleteItem(shoppingItemDTO){
-    const url = defaulturl + shoppingItemsPath + `delete/{id=${shoppingItemDTO.id}`;
+    const url = defaulturl + shoppingItemsPath + `{id=${shoppingItemDTO.id}`;
     let response = await fetch(url,{
         method: "DELETE",
         headers: { "Content-Type": "application/json" },

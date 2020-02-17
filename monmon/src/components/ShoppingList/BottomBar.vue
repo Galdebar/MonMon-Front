@@ -1,17 +1,23 @@
 <template>
-    <div id="add-new-item">
-        <form name="add-item" v-on:submit.prevent="addItem">
-            <input type="text" placeholder="Enter item name" v-model="newItemName">
-            <select v-model="newItemCategory" >
-                <option
-                        v-for="category in categories"
-                        v-bind:value="category"
-                        v-bind:key="category"
-                >{{category}}
-                </option>
-            </select>
-            <button>Add Item</button>
-        </form>
+    <div id="bottom-bar" class="container">
+        <div class="wrapper">
+            <form class="no-wrap-flex" name="add-item" v-on:submit.prevent="addItem">
+                <input type="text" placeholder="Enter item name" v-model="newItemName">
+                <select v-model="newItemCategory" >
+                    <option
+                            v-for="category in categories"
+                            v-bind:value="category"
+                            v-bind:key="category"
+                    >{{category}}
+                    </option>
+                </select>
+                <button class="add-item-btn">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </button>
+            </form>
+        </div>
+
     </div>
 
 </template>
@@ -58,14 +64,51 @@
     }
 </script>
 
-<style scoped>
-    #add-new-item {
+<style lang="scss" scoped>
+    @import "../../assets/scss/Variables";
+
+    #bottom-bar {
         position: fixed;
-        background-color: grey;
+        background-color: $background-color;
         bottom: 0;
         left: 0;
         width: 100vw;
+        height: $bottom-bar-height;
         z-index: 5;
-        padding-bottom: 20px;
+        padding-top: $default-distance;
+        form{
+            input, select{
+                width: 40%;
+                background: none;
+                border: none;
+                padding: $extra-small-distance;
+                box-sizing: border-box;
+                border-bottom: 1px solid $default-black;
+            }
+        }
+
+        .add-item-btn{
+            background-color: $brand-green;
+            width:$large-distance + $default-distance;
+            height: $large-distance + $default-distance;
+            box-sizing: border-box;
+            position: relative;
+            border-radius: 50%;
+            .bar{
+                background-color: $background-color;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+            .bar:first-of-type{
+                height:75%;
+                width:15%;
+            }
+            .bar:last-of-type{
+                height: 15%;
+                width: 75%;
+            }
+        }
     }
 </style>

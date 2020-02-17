@@ -4,11 +4,12 @@
                 ref="shoppingListPending"
                 v-bind:received-items="pendingItems"
                 @refreshList="getItems"
-        ></ShoppingListPending>
+                @editItem="editItem"
+        />
         <ShoppingListInCart
                 v-bind:received-items="itemsInCart"
                 @refreshList="getItems"
-        ></ShoppingListInCart>
+        />
     </div>
 </template>
 
@@ -34,6 +35,7 @@
         data() {
             return {
                 allItems: [],
+                isOverlayHidden : true,
             }
         },
         computed: {
@@ -61,19 +63,26 @@
                 });
                 return filtered;
             },
+            editItem(shoppingItemDTO){
+                this.$emit("editItem", shoppingItemDTO);
+            },
         }
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
+    @import "../../assets/scss/Variables";
+
     #shopping-list-main{
         width: 100vw;
-        height: calc(100vh - 34px - 68.8px);
-        margin-top: 34px;
+        height: 100vh;
         overflow-y: scroll;
         -ms-overflow-style: none;
+        background-color: $deep-bg-color;
     }
-    #shopping-list-main::-webkit-scrollbar{
+
+
+    #shopping-list-main::-webkit-scrollbar {
         display: none;
     }
 </style>

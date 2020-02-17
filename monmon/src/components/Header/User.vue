@@ -1,6 +1,5 @@
 <template>
-    <div>
-<!--        <UserIcon></UserIcon>-->
+    <div class="standard-margins-vertical separator-bottom-dark">
         <h3>{{email}}</h3>
     </div>
 </template>
@@ -20,3 +19,7 @@
         }
     }
 </script>
+
+<style lang="scss">
+
+</style>

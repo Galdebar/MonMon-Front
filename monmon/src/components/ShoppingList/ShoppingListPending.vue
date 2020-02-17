@@ -1,13 +1,13 @@
 <template>
-    <div id="shopping-list-pending">
-        <h1>ShoppingListPending</h1>
+    <div id="shopping-list-pending" >
         <ShoppingListCategory
                 v-for="(item, categoryName) in categorizedItems"
                 v-bind:title="categoryName"
                 v-bind:items="item"
                 v-bind:key="categoryName"
                 @refreshList="refreshList"
-        ></ShoppingListCategory>
+                @editItem="editItem"
+        />
     </div>
 </template>
 
@@ -49,11 +49,11 @@
                 this.categories = responseObj;
             },
             categorizeItems(){
-                let categorized = {}
+                let categorized = {};
                 for (let category in this.categories) {
                     let key = this.categories[category];
                     let value = this.items.filter(item => {
-                        return item.itemCategory == key;
+                        return item.itemCategory === key;
                     });
                     if (value.length !== 0) {
                         categorized[key] = value;
@@ -63,13 +63,18 @@
             },
             refreshList(){
                 this.$emit("refreshList");
+            },
+            editItem(shoppingItemDTO){
+                this.$emit("editItem", shoppingItemDTO);
             }
         }
     }
 </script>
 
-<style>
-    #shopping-list-pending {
-        margin-top: 50px;
+<style lang="scss" scoped>
+    @import "../../assets/scss/Variables";
+
+    #shopping-list-pending{
+        margin-top: $top-bar-height;
     }
 </style>

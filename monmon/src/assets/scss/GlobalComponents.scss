@@ -1,5 +1,196 @@
 @import "Variables";
 
-.container{
-  background-color: $testColor;
+
+body {
+  font-family: "Quicksand", sans-serif;
+  background-color: $background-color;
+  //   background: linear-gradient(145deg, #dee3e9, #f0f5fd);
+  height: 100vh;
+  overflow-x: hidden;
 }
+
+.wrapper {
+  width: $wrapper-width-mobile;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: $small-distance;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: $default-black;
+}
+
+
+button {
+  box-sizing: border-box;
+  padding: $small-distance;
+  border: none;
+  border: 2px solid $brand-green;
+  border-radius: $extra-small-distance;
+  background: none;
+  //background: linear-gradient(145deg, #f0f5fd, #caced4);
+  //   background: $background-color;
+  box-shadow: 1px 1px 4px $container-shadow-color, -1px -1px 4px $container-highlight-color;
+}
+
+button.green {
+  //   background: linear-gradient(145deg, #f26e16, #cb5d13);
+  background: $brand-green;
+  color: $default-white;
+}
+
+button.white {
+  background: $default-white;
+  border-color: $default-white;
+  color: $brand-green;
+  box-shadow: 1px 1px 4px $default-black, -1px -1px 4px $container-highlight-color;
+}
+
+button.checkmark img {
+  border: 2px solid $grey;
+}
+
+button.square-btn {
+  width: $default-button-size;
+  height: $default-button-size;
+  padding: $extra-small-distance;
+
+  i {
+    font-size: $default-button-size - ($extra-small-distance * 2);
+  }
+}
+
+button.round-btn {
+  width: $large-distance;
+  height: $large-distance;
+  padding: $extra-small-distance;
+
+  i {
+    font-size: $large-distance - ($extra-small-distance * 2);
+  }
+}
+
+
+input, select, textarea {
+  max-width: 100%;
+  background: none;
+  border: none;
+  padding: $extra-small-distance;
+  box-sizing: border-box;
+  border-bottom: 1px solid $default-black;
+}
+
+input:focus, select:focus, textarea:focus{
+  border-bottom: 2px solid $brand-green;
+}
+
+
+.container-inset {
+  border-radius: $small-distance;
+  margin: $small-distance 0;
+  box-sizing: border-box;
+  background: $background-color;
+  box-shadow: inset 5px 5px 10px #bec3c9, inset -5px -5px 10px #ffffff;
+}
+
+.container {
+  border-radius: $extra-small-distance;
+  background: $background-color;
+
+  //background: linear-gradient(145deg, #caced4, #f0f5fd);
+  box-shadow: 1px 2px 5px $container-shadow-color, -1px -2px 5px $container-highlight-color;
+}
+
+.no-wrap-flex {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-shadow {
+  text-shadow: 0px 1px 2px $default-black;
+}
+
+.masking-shadow-bottom {
+  -webkit-box-shadow: 0px 10px 10px 0px $background-color;
+  -moz-box-shadow: 0px 10px 10px 0px $background-color;
+  box-shadow: 0px 10px 10px 0px $background-color;
+}
+
+.masking-shadow-top {
+  -webkit-box-shadow: 0px -10px 10px 0px $background-color;
+  -moz-box-shadow: 0px -10px 10px 0px $background-color;
+  box-shadow: 0px 10px -10px 0px $background-color;
+}
+
+.separator-bottom-light {
+  border-bottom: 2px solid $slightly-darker-bg;
+}
+
+.separator-bottom-dark {
+  border-bottom: 2px solid $default-black;
+}
+
+.standard-margins-vertical {
+  margin-top: $default-distance;
+  margin-bottom: $default-distance;
+}
+
+.separator-top-light {
+  border-top: 2px solid $default-white;
+}
+
+.default-padding {
+  padding: $default-distance;
+  box-sizing: border-box;
+}
+
+.small-padding {
+  padding: $small-distance;
+  box-sizing: border-box;
+}
+
+
+#main-color-overlay {
+  background-color: rgba(0, 0, 0, 0.76);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $list-overlay-z-index;
+  transition-duration: background-color $fast-transition;
+  transition-duration: left $extra-fast-transition;
+}
+
+#main-color-overlay.hidden {
+  background-color: rgba(0, 0, 0, 0);
+  left: -100vh;
+  transition-duration: background-color $fast-transition;
+  transition-duration: left $extra-fast-transition;
+}
+
+

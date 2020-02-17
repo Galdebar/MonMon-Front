@@ -1,1 +1,39 @@
-$testColor: whitesmoke;
+$default-distance: 16px;
+$small-distance: 8px;
+$extra-small-distance: 4px;
+$large-distance: 32px;
+$extra-large-distance: 64px;
+$corner-rounding: 10px;
+
+$default-button-size: 48px;
+
+$top-bar-height: 64px;
+$bottom-bar-height: 80px;
+
+$wrapper-width-mobile: 95%;
+$wrapper-width-desktop: 1200px;
+
+$header-width: 75vw;
+
+$background-z-index: 0;
+$list-z-index: 5;
+$list-overlay-z-index: 10;
+$header-z-index: 15;
+
+$default-transition: 0.5s;
+$fast-transition: 0.2s;
+$extra-fast-transition: 0.1s;
+
+$brand-green: #28ed00;
+$brand-green-washed-out: #b2e68a;
+$default-white: whitesmoke;
+$default-black: #1f1f1f;
+$background-color: #fafafa;
+$slightly-darker-bg: #cbccd1;
+//$deep-bg-color: #E8EBF2;
+$deep-bg-color: #EFF0F2;
+$light-grey: rgb(197, 197, 197);
+$grey: #878787;
+
+$container-shadow-color: #a8a8a8;
+$container-highlight-color: #ffffff;

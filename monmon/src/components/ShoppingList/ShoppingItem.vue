@@ -1,8 +1,29 @@
 <template>
-    <div>
-        <h3>{{shoppingItemDTO.itemName}}<span v-if="shoppingItemDTO.quantity != 0">{{shoppingItemDTO.quantity}}</span></h3>
-        <h6>{{shoppingItemDTO.comment}}</h6>
-        <button v-on:click="markItem">{{buttonText}}</button>
+    <div class="shopping-item default-padding">
+        <div v-on:click="editItem" class="edit-btn">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="text">
+            <h3
+                    v-bind:class="{incart: shoppingItemDTO.isInCart}"
+            >
+                {{shoppingItemDTO.itemName}}
+                <span
+                    v-if="shoppingItemDTO.quantity !== 0"
+                >
+                    {{shoppingItemDTO.quantity}}
+                </span>
+            </h3>
+            <h5
+                    v-bind:class="{shown: shoppingItemDTO.comment.length > 0}"
+            >
+                {{shoppingItemDTO.comment}}
+            </h5>
+        </div>
+
+        <button v-on:click="markItem"/>
     </div>
 
 </template>
@@ -16,54 +37,98 @@
             shoppingItemDTO: Object
         },
         created() {
-            this.assignText();
         },
-        data(){
-            return{
-                buttonText : "",
-                shoppingItem : {}
+        data() {
+            return {
+                shoppingItem: {}
             }
         },
+
         methods: {
-            markItem(){
+            markItem() {
                 console.log(this.shoppingItem);
-                if(this.shoppingItemDTO.isInCart){
+                if (this.shoppingItemDTO.isInCart) {
                     this.deleteItem();
-                } else{
+                } else {
                     this.markAsBought();
                 }
             },
-            async markAsBought(){
+            editItem() {
+                this.$emit("editItem", this.createShoppingItem());
+            },
+            async markAsBought() {
                 let tempShoppingItem = this.createShoppingItem();
                 tempShoppingItem.isInCart = true;
                 let responseIsOk = await updateItem(tempShoppingItem);
-                if(responseIsOk){
+                if (responseIsOk) {
                     this.$emit("refreshList");
                 }
             },
-            async deleteItem(){
+            async deleteItem() {
                 let responseIsOk = await deleteItem(this.shoppingItemDTO);
-                if(responseIsOk){
+                if (responseIsOk) {
                     this.$emit("refreshList");
                 }
             },
-            createShoppingItem(){
+            createShoppingItem() {
                 return {
-                    id : this.shoppingItemDTO.id,
+                    id: this.shoppingItemDTO.id,
                     itemName: this.shoppingItemDTO.itemName,
                     itemCategory: this.shoppingItemDTO.itemCategory,
-                    quantity:this.shoppingItemDTO.quantity,
-                    comment:this.shoppingItemDTO.comment,
-                    isInCart:this.shoppingItemDTO.isInCart
+                    quantity: this.shoppingItemDTO.quantity,
+                    comment: this.shoppingItemDTO.comment,
+                    isInCart: this.shoppingItemDTO.isInCart
                 }
             },
-            assignText(){
-                if(this.shoppingItemDTO.isInCart){
-                    this.buttonText = "Delete"
-                } else{
-                    this.buttonText = "Mark"
-                }
-            }
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    @import "../../assets/scss/Variables";
+
+    .shopping-item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: $small-distance;
+
+        .edit-btn {
+            height: $default-distance;
+            width: $default-distance;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .dot {
+                height: $extra-small-distance;
+                width: $extra-small-distance;
+                border-radius: $extra-small-distance;
+                background-color: $brand-green;
+            }
+        }
+
+        .text {
+            margin: 0 $default-distance;
+            justify-self: flex-start;
+            width: 100%;
+            overflow: hidden;
+
+            .incart {
+                text-decoration: line-through;
+            }
+
+            h5 {
+                color: $grey;
+                margin-top: 0;
+            }
+            h5.shown{
+                margin-top: $small-distance;
+            }
+        }
+
+        button {
+            justify-self: flex-end;
+        }
+    }
+</style>

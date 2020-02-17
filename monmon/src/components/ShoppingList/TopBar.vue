@@ -1,8 +1,12 @@
 <template>
-    <div>
-        <button v-on:click="moveHeader">
-            <MenuIcon></MenuIcon>
-        </button>
+    <div id="top-bar" class="container">
+        <div class="wrapper no-wrap-flex small-padding">
+            <button class="green" v-on:click="moveHeader">
+                <MenuIcon/>
+            </button>
+            <h2>{{title}}</h2>
+            <button>Filter</button>
+        </div>
     </div>
 </template>
 
@@ -15,21 +19,29 @@
         components: {
             MenuIcon
         },
-        methods :{
-            moveHeader(){
-                this.$emit("moveHeader" );
+        data() {
+            return {
+                title: "Shopping List"
+            }
+        },
+        methods: {
+            moveHeader() {
+                this.$emit("moveHeader");
             }
         }
     }
 </script>
 
-<style scoped>
-    div {
+<style lang="scss" scoped>
+    @import "../../assets/scss/Variables";
+
+    #top-bar {
         position: fixed;
-        background-color: grey;
+        background-color: $background-color;
         top: 0;
         left: 0;
         width: 100vw;
+        height: $top-bar-height;
         z-index: 5;
     }
 </style>

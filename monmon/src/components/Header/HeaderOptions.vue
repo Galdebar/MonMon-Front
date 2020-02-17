@@ -15,3 +15,7 @@
         name: 'HeaderOptions'
     }
 </script>
+
+<style lang="scss">
+
+</style>

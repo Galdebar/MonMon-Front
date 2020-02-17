@@ -1,15 +1,23 @@
 <template>
     <div>
-        <Header ref="header"></Header>
-        <TopBar @moveHeader="moveHeader"></TopBar>
-        <ShoppingListMain class="container"
+        <Header ref="header" @hideOverlay="triggerOverlay"/>
+        <EditItem
+                ref="editItemView"
+                v-bind:categories="categories"
+                @triggerOverlay="triggerOverlay"
+                @refreshList="refreshList"
+        />
+        <TopBar @moveHeader="moveHeader"/>
+        <div id="main-color-overlay" v-bind:class="{hidden: !isOverlayShown}"></div>
+        <ShoppingListMain
                 ref="shoppingListMain"
                 v-bind:categories="categories"
-        ></ShoppingListMain>
+                @editItem="editItem"
+        />
         <BottomBar
                 @refreshList="refreshList"
                 v-bind:categories="categories"
-        ></BottomBar>
+        />
     </div>
 
 </template>
@@ -19,6 +27,7 @@
     import TopBar from "./ShoppingList/TopBar";
     import ShoppingListMain from "./ShoppingList/ShoppingListMain";
     import BottomBar from "./ShoppingList/BottomBar";
+    import EditItem from "./ShoppingList/EditItem";
 
     import {getShoppingItemCategories} from "../assets/js/Dispatcher";
 
@@ -28,11 +37,14 @@
             Header,
             TopBar,
             ShoppingListMain,
-            BottomBar
+            BottomBar,
+            EditItem
         },
         data() {
             return {
-                categories: {}
+                categories: {},
+                isEditingItem: false,
+                isOverlayShown: false
             }
         },
         created() {
@@ -41,6 +53,10 @@
         methods: {
             moveHeader() {
                 this.$refs.header.moveHeader();
+                this.triggerOverlay();
+            },
+            triggerOverlay(){
+                this.isOverlayShown = !this.isOverlayShown;
             },
             refreshList() {
                 this.$refs.shoppingListMain.getItems();
@@ -48,6 +64,10 @@
             async getCategories() {
                 this.categories = await getShoppingItemCategories();
             },
+            editItem(shoppingItemDTO){
+                // this.triggerOverlay();
+                this.$refs.editItemView.triggerView(shoppingItemDTO);
+            }
         }
     }
 
