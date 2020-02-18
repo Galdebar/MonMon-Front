@@ -40,7 +40,7 @@ button {
   box-sizing: border-box;
   padding: $small-distance;
   border: none;
-  border: 2px solid $brand-green;
+  border: 2px solid $brand-yellow;
   border-radius: $extra-small-distance;
   background: none;
   //background: linear-gradient(145deg, #f0f5fd, #caced4);
@@ -48,16 +48,16 @@ button {
   box-shadow: 1px 1px 4px $container-shadow-color, -1px -1px 4px $container-highlight-color;
 }
 
-button.green {
+button.yellow {
   //   background: linear-gradient(145deg, #f26e16, #cb5d13);
-  background: $brand-green;
-  color: $default-white;
+  background: $brand-yellow;
+  color: $default-black;
 }
 
 button.white {
   background: $default-white;
   border-color: $default-white;
-  color: $brand-green;
+  color: $brand-yellow;
   box-shadow: 1px 1px 4px $default-black, -1px -1px 4px $container-highlight-color;
 }
 
@@ -96,7 +96,7 @@ input, select, textarea {
 }
 
 input:focus, select:focus, textarea:focus{
-  border-bottom: 2px solid $brand-green;
+  border-bottom: 2px solid $brand-yellow;
 }
 
 

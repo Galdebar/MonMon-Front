@@ -38,13 +38,18 @@
             async addItem() {
                 const defaultUrl = "http://localhost:8080/shoppingitems";
                 const item = this.createShoppingItem();
-                let response = await fetch(defaultUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(item)
-                });
-                this.clearValues();
-                this.$emit("refreshList", item.itemCategory);
+                if(this.newItemName !== ""){
+                    let response = await fetch(defaultUrl, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(item)
+                    });
+                    this.clearValues();
+                    this.$emit("refreshList", item.itemCategory);
+                } else{
+                    console.log("No item name specified-- should do something :P")
+                }
+
             },
             clearValues(){
               this.newItemName = "";
@@ -53,10 +58,17 @@
             createShoppingItem(){
                 return {
                     itemName: this.newItemName,
-                    itemCategory: this.newItemCategory,
+                    itemCategory: this.checkItemCategory(),
                     quantity: 0,
                     comment: "",
                     isInCart: false
+                }
+            },
+            checkItemCategory(){
+                if(this.newItemCategory === ""){
+                    return "Uncategorized";
+                } else {
+                    return this.newItemCategory;
                 }
             },
         }
@@ -88,7 +100,7 @@
         }
 
         .add-item-btn{
-            background-color: $brand-green;
+            background-color: $brand-yellow;
             width:$large-distance + $default-distance;
             height: $large-distance + $default-distance;
             box-sizing: border-box;

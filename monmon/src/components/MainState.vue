@@ -27,7 +27,7 @@
     import TopBar from "./ShoppingList/TopBar";
     import ShoppingListMain from "./ShoppingList/ShoppingListMain";
     import BottomBar from "./ShoppingList/BottomBar";
-    import EditItem from "./ShoppingList/EditItem";
+    import EditItem from "./EditItem";
 
     import {getShoppingItemCategories} from "../assets/js/Dispatcher";
 

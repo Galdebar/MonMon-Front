@@ -3,11 +3,11 @@
 
         <h2 class="category-title">{{title}}</h2>
         <div class="container">
-            <ShoppingItem @editItem="editItem"
-                          v-for="item in items"
-                          v-bind:shopping-item-d-t-o="item"
-                          v-bind:key="item.id"
-                          @refreshList="refreshList"
+            <ShoppingItemPending @editItem="editItem"
+                                 v-for="item in items"
+                                 v-bind:shopping-item-d-t-o="item"
+                                 v-bind:key="item.id"
+                                 @refreshList="refreshList"
             />
         </div>
 
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-    import ShoppingItem from "./ShoppingItem";
+    import ShoppingItemPending from "./ShoppingItemPending";
 
     export default {
         name: 'ShoppingListCategory',
         components: {
-            ShoppingItem,
+            ShoppingItemPending,
         },
         props : {
             title: String,

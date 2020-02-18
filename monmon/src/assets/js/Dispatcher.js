@@ -26,12 +26,32 @@ export async function updateItem(shoppingItemDTO){
     return response.ok;
 }
 
+export async function updateItems(itemsArray){
+    const url = defaulturl + shoppingItemsPath + "updateItems";
+    let response = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(itemsArray)
+    });
+    return response.ok;
+}
+
 export async function deleteItem(shoppingItemDTO){
     const url = defaulturl + shoppingItemsPath + `{id=${shoppingItemDTO.id}`;
     let response = await fetch(url,{
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(shoppingItemDTO)
+    });
+    return response.ok;
+}
+
+export async function deleteItems(itemsArray){
+    const url = defaulturl + shoppingItemsPath + "deleteItems";
+    let response = await fetch(url, {
+        method:"DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(itemsArray)
     });
     return response.ok;
 }

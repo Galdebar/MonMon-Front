@@ -6,9 +6,7 @@
             <div class="dot"></div>
         </div>
         <div class="text">
-            <h3
-                    v-bind:class="{incart: shoppingItemDTO.isInCart}"
-            >
+            <h3>
                 {{shoppingItemDTO.itemName}}
                 <span
                     v-if="shoppingItemDTO.quantity !== 0"
@@ -23,7 +21,7 @@
             </h5>
         </div>
 
-        <button v-on:click="markItem"/>
+        <button v-on:click="markAsBought"/>
     </div>
 
 </template>
@@ -32,7 +30,7 @@
     import {deleteItem} from "../../assets/js/Dispatcher";
 
     export default {
-        name: 'ShoppingItem',
+        name: 'ShoppingItemPending',
         props: {
             shoppingItemDTO: Object
         },
@@ -45,14 +43,6 @@
         },
 
         methods: {
-            markItem() {
-                console.log(this.shoppingItem);
-                if (this.shoppingItemDTO.isInCart) {
-                    this.deleteItem();
-                } else {
-                    this.markAsBought();
-                }
-            },
             editItem() {
                 this.$emit("editItem", this.createShoppingItem());
             },
@@ -104,7 +94,7 @@
                 height: $extra-small-distance;
                 width: $extra-small-distance;
                 border-radius: $extra-small-distance;
-                background-color: $brand-green;
+                background-color: $brand-yellow;
             }
         }
 
@@ -113,10 +103,6 @@
             justify-self: flex-start;
             width: 100%;
             overflow: hidden;
-
-            .incart {
-                text-decoration: line-through;
-            }
 
             h5 {
                 color: $grey;

@@ -1,7 +1,7 @@
 <template>
     <div id="top-bar" class="container">
         <div class="wrapper no-wrap-flex small-padding">
-            <button class="green" v-on:click="moveHeader">
+            <button class="yellow" v-on:click="moveHeader">
                 <MenuIcon/>
             </button>
             <h2>{{title}}</h2>

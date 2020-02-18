@@ -2,6 +2,7 @@
     <div id="editItemView" v-bind:class="{hidden: !isShown}">
         <div class="container popup-container small-padding">
             <div class="top no-wrap-flex">
+                <button v-on:click="deleteItem">Delete</button>
                 <h1>{{headerTitle}}</h1>
                 <button v-on:click="triggerView">X</button>
             </div>
@@ -61,7 +62,7 @@
 </template>
 
 <script>
-    import {updateItem} from "../../assets/js/Dispatcher";
+    import {deleteItem, updateItem} from "../assets/js/Dispatcher";
 
     export default {
         name: 'EditItem',
@@ -78,15 +79,33 @@
         },
         methods: {
             async updateItem() {
-                let response = await updateItem(this.shoppingItem);
-                console.log(response);
-                this.$emit("refreshList");
-                this.triggerView(this.shoppingItem);
+                let responseIsOk = await updateItem(this.shoppingItem);
+                if(responseIsOk){
+                    this.$emit("refreshList");
+                    this.triggerView(this.createDummyItem());
+                }
+            },
+            async deleteItem(){
+                let responseIsOk = await deleteItem(this.shoppingItem);
+                if(responseIsOk){
+                    this.$emit("refreshList");
+                    this.triggerView(this.createDummyItem());
+                }
             },
             triggerView(shoppingItemDTO) {
                 this.shoppingItem = shoppingItemDTO;
                 this.isShown = !this.isShown;
                 this.$emit("triggerOverlay");
+            },
+            createDummyItem(){
+                return {
+                    id: "",
+                    itemName: "",
+                    itemCategory: "",
+                    quantity: 0,
+                    comment: "",
+                    isInCart: false
+                }
             },
             increaseQuantity() {
                 this.shoppingItem.quantity++;
@@ -100,7 +119,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "../../assets/scss/Variables";
+    @import "../assets/scss/Variables";
 
     #editItemView {
         position: absolute;
