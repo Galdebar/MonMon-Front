@@ -14,8 +14,6 @@
 </template>
 
 <script>
-    import TopBar from "./TopBar";
-    import BottomBar from "./BottomBar";
     import ShoppingListPending from "./ShoppingListPending";
     import ShoppingListInCart from "./ShoppingListInCart";
 
@@ -24,8 +22,6 @@
     export default {
         name: 'ShoppingListMain',
         components: {
-            TopBar,
-            BottomBar,
             ShoppingListPending,
             ShoppingListInCart
         },

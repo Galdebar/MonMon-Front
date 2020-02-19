@@ -21,7 +21,7 @@
             </h5>
         </div>
 
-        <button v-on:click="markAsBought"/>
+        <button v-on:click="testRequest"/>
     </div>
 
 </template>
@@ -70,6 +70,21 @@
                     isInCart: this.shoppingItemDTO.isInCart
                 }
             },
+            async testRequest(){
+                const url = "https://chomp.p.rapidapi.com/product-search.php";
+                const request = {
+                    name: "eggs"
+                };
+                let response = await fetch(url, {
+                    method:"GET",
+                    headers: {
+                        "x-rapidapi-host": "chomp.p.rapidapi.com",
+                        "x-rapidapi-key": "c450774140msh9aeccdba42b7606p1b79bfjsn2e70fe87f8f1"
+                    },
+                    body: JSON.stringify(request)
+                });
+                console.log(response);
+            }
         }
     }
 </script>

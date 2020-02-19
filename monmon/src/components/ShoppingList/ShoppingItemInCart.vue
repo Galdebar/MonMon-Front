@@ -6,7 +6,7 @@
                 {{shoppingItemDTO.itemName}}
             </h3>
         </div>
-        <button v-on:click="unmarkAsBought"><</button>
+        <button v-on:click="unmarkAsBought">Y</button>
     </div>
 
 </template>

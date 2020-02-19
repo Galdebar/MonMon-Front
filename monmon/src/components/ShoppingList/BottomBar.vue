@@ -23,6 +23,8 @@
 </template>
 
 <script>
+    import {addItem} from "../../assets/js/Dispatcher";
+
     export default {
         name: 'BottomBar',
         props: {
@@ -36,16 +38,13 @@
         },
         methods: {
             async addItem() {
-                const defaultUrl = "http://localhost:8080/shoppingitems";
                 const item = this.createShoppingItem();
                 if(this.newItemName !== ""){
-                    let response = await fetch(defaultUrl, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(item)
-                    });
-                    this.clearValues();
-                    this.$emit("refreshList", item.itemCategory);
+                    let responseIsOK = await addItem(item);
+                    if(responseIsOK){
+                        this.clearValues();
+                        this.$emit("refreshList", item.itemCategory);
+                    }
                 } else{
                     console.log("No item name specified-- should do something :P")
                 }

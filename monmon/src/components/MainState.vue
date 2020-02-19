@@ -63,9 +63,9 @@
             },
             async getCategories() {
                 this.categories = await getShoppingItemCategories();
+                console.log(this.categories);
             },
             editItem(shoppingItemDTO){
-                // this.triggerOverlay();
                 this.$refs.editItemView.triggerView(shoppingItemDTO);
             }
         }
