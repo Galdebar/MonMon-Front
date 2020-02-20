@@ -3,7 +3,6 @@
         <Header ref="header" @hideOverlay="triggerOverlay"/>
         <EditItem
                 ref="editItemView"
-                v-bind:categories="categories"
                 @triggerOverlay="triggerOverlay"
                 @refreshList="refreshList"
         />
@@ -11,12 +10,10 @@
         <div id="main-color-overlay" v-bind:class="{hidden: !isOverlayShown}"></div>
         <ShoppingListMain
                 ref="shoppingListMain"
-                v-bind:categories="categories"
                 @editItem="editItem"
         />
         <BottomBar
                 @refreshList="refreshList"
-                v-bind:categories="categories"
         />
     </div>
 
@@ -29,7 +26,6 @@
     import BottomBar from "./ShoppingList/BottomBar";
     import EditItem from "./EditItem";
 
-    import {getShoppingItemCategories} from "../assets/js/Dispatcher";
 
     export default {
         name: 'MainState',
@@ -42,13 +38,13 @@
         },
         data() {
             return {
-                categories: {},
                 isEditingItem: false,
                 isOverlayShown: false
             }
         },
-        created() {
-            this.getCategories();
+        mounted() {
+            this.$store.dispatch("refreshItemsList");
+            this.$store.dispatch("refreshCategories");
         },
         methods: {
             moveHeader() {
@@ -59,11 +55,6 @@
                 this.isOverlayShown = !this.isOverlayShown;
             },
             refreshList() {
-                this.$refs.shoppingListMain.getItems();
-            },
-            async getCategories() {
-                this.categories = await getShoppingItemCategories();
-                console.log(this.categories);
             },
             editItem(shoppingItemDTO){
                 this.$refs.editItemView.triggerView(shoppingItemDTO);

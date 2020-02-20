@@ -10,7 +10,7 @@
             </div>
             <div>
                 <ShoppingItemInCart
-                        v-for="item in receivedItems"
+                        v-for="item in itemsInCart"
                         v-bind:shopping-item-d-t-o="item"
                         v-bind:key="item.id"
                         @refreshList="refreshList"
@@ -22,40 +22,30 @@
 
 <script>
     import ShoppingItemInCart from "./ShoppingItemInCart";
-    import {deleteItems, updateItems} from "../../assets/js/Dispatcher";
 
     export default {
         name: 'ShoppingListInCart',
         components: {
             ShoppingItemInCart
         },
-        props: {
-            receivedItems: Array
-        },
         data() {
             return {
                 title: "In Cart",
             }
         },
+        computed: {
+            itemsInCart(){
+                return this.$store.getters.getItems(true);
+            }
+        },
         methods: {
             refreshList() {
-                this.$emit("refreshList");
             },
             async deleteAllItems() {
-                let responseIsOk = await deleteItems(this.receivedItems);
-                if (responseIsOk) {
-                    this.$emit("refreshList");
-                }
+
             },
             async unmarkAllItems() {
-                let tempArray = await this.receivedItems;
-                tempArray.forEach(shoppingItem => {
-                    shoppingItem.isInCart = false
-                });
-                let responseIsOk = await updateItems(tempArray);
-                if (responseIsOk) {
-                    this.$emit("refreshList");
-                }
+
             }
         }
     }

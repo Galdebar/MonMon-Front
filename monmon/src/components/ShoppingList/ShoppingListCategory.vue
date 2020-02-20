@@ -7,7 +7,6 @@
                                  v-for="item in items"
                                  v-bind:shopping-item-d-t-o="item"
                                  v-bind:key="item.id"
-                                 @refreshList="refreshList"
             />
         </div>
 
@@ -24,12 +23,13 @@
         },
         props : {
             title: String,
-            items: Array
+        },
+        computed: {
+            items: function(){
+                return this.$store.getters.getPendingItemsByCategory(this.title);
+            }
         },
         methods: {
-            refreshList(){
-                this.$emit("refreshList");
-            },
             editItem(shoppingItemDTO){
                 this.$emit("editItem", shoppingItemDTO);
             }

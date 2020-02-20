@@ -34,7 +34,7 @@
                     <div class="input">
                         <select v-model="shoppingItem.itemCategory">
                             <option
-                                    v-for="category in categories"
+                                    v-for="category in itemCategories"
                                     v-bind:key="category"
                                     v-bind:value="category"
                             >{{category}}
@@ -66,10 +66,6 @@
 
     export default {
         name: 'EditItem',
-        props: {
-            categories: {},
-
-        },
         data() {
             return {
                 headerTitle: 'Edit Item',
@@ -77,18 +73,21 @@
                 isShown: false
             }
         },
+        computed: {
+            itemCategories: function () {
+                return this.$store.getters.itemCategories;
+            }
+        },
         methods: {
             async updateItem() {
-                let responseIsOk = await updateItem(this.shoppingItem);
-                if(responseIsOk){
-                    this.$emit("refreshList");
+                let isResponseOK = await this.$store.dispatch("updateItem", this.shoppingItem);
+                if(isResponseOK){
                     this.triggerView(this.createDummyItem());
                 }
             },
             async deleteItem(){
-                let responseIsOk = await deleteItem(this.shoppingItem);
+                let responseIsOk = await this.$store.dispatch("deleteItem", this.shoppingItem);
                 if(responseIsOk){
-                    this.$emit("refreshList");
                     this.triggerView(this.createDummyItem());
                 }
             },

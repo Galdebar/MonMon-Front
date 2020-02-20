@@ -31,16 +31,10 @@
             async unmarkAsBought() {
                 let tempShoppingItem = this.createShoppingItem();
                 tempShoppingItem.isInCart = false;
-                let responseIsOk = await updateItem(tempShoppingItem);
-                if (responseIsOk) {
-                    this.$emit("refreshList");
-                }
+                this.$store.dispatch("updateItem", tempShoppingItem);
             },
             async deleteItem() {
-                let responseIsOk = await deleteItem(this.shoppingItemDTO);
-                if (responseIsOk) {
-                    this.$emit("refreshList");
-                }
+                this.$store.dispatch("deleteItem", this.shoppingItemDTO);
             },
             createShoppingItem() {
                 return {

@@ -1,19 +1,19 @@
 const defaulturl = "http://localhost:8080/";
 const shoppingItemsPath = "shoppingitems/";
+const categorySearchPath = "categorysearch/";
+const searchPrefix = "s=";
 
 
 export async function getAllShoppingItems(){
     const url = defaulturl + shoppingItemsPath + "getAll";
     let response = await fetch(url);
-    let responseArray = await response.json();
-    return responseArray;
+    return await checkResponse(response);
 }
 
 export async function getShoppingItemCategories(){
     const url = defaulturl + "getShoppingItemCategories";
     let response = await fetch(url);
-    let responseObj = await response.json();
-    return responseObj;
+    return await checkResponse(response);
 }
 
 export async function updateItem(shoppingItemDTO){
@@ -23,7 +23,7 @@ export async function updateItem(shoppingItemDTO){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(shoppingItemDTO)
     });
-    return response.ok;
+    return await checkResponse(response);
 }
 
 export async function updateItems(itemsArray){
@@ -63,5 +63,22 @@ export async function addItem(shoppingItemDTO){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(shoppingItemDTO)
     });
-    return response.ok;
+    return await checkResponse(response);
+}
+
+export async function search(searchString){
+    const url = defaulturl + categorySearchPath + searchPrefix + searchString;
+    if(searchString !== ""){
+        let response = await fetch(url);
+        if(response.ok){
+            return response.text();
+        } else return "";
+    }
+}
+
+async function checkResponse(response){
+    if(response.ok){
+        let responseObj = await response.json();
+        return responseObj;
+    } else return null;
 }

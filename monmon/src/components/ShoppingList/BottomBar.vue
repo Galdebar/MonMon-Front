@@ -3,9 +3,9 @@
         <div class="wrapper">
             <form class="no-wrap-flex" name="add-item" v-on:submit.prevent="addItem">
                 <input type="text" placeholder="Enter item name" v-model="newItemName">
-                <select v-model="newItemCategory" >
+                <select v-model="newItemCategory">
                     <option
-                            v-for="category in categories"
+                            v-for="category in itemCategories"
                             v-bind:value="category"
                             v-bind:key="category"
                     >{{category}}
@@ -23,38 +23,48 @@
 </template>
 
 <script>
-    import {addItem} from "../../assets/js/Dispatcher";
+    import {search} from "../../assets/js/Dispatcher";
 
     export default {
         name: 'BottomBar',
-        props: {
-            categories: {}
-        },
         data() {
             return {
                 newItemName: "",
                 newItemCategory: "",
             }
         },
+        computed: {
+            itemCategories: function () {
+                return this.$store.getters.itemCategories;
+            }
+        },
+        watch: {
+            newItemName : function(){
+                this.search();
+            },
+        },
         methods: {
             async addItem() {
                 const item = this.createShoppingItem();
-                if(this.newItemName !== ""){
-                    let responseIsOK = await addItem(item);
-                    if(responseIsOK){
+                if (this.newItemName !== "") {
+                    let isItemAdded = await this.$store.dispatch('addNewShoppingItem', item);
+                    if (isItemAdded) {
                         this.clearValues();
-                        this.$emit("refreshList", item.itemCategory);
                     }
-                } else{
+                } else {
                     console.log("No item name specified-- should do something :P")
                 }
 
             },
-            clearValues(){
-              this.newItemName = "";
-              this.newItemCategory = "";
+            async search(){
+                let response = await search(this.newItemName);
+                console.log(response);
             },
-            createShoppingItem(){
+            clearValues() {
+                this.newItemName = "";
+                this.newItemCategory = "";
+            },
+            createShoppingItem() {
                 return {
                     itemName: this.newItemName,
                     itemCategory: this.checkItemCategory(),
@@ -63,8 +73,8 @@
                     isInCart: false
                 }
             },
-            checkItemCategory(){
-                if(this.newItemCategory === ""){
+            checkItemCategory() {
+                if (this.newItemCategory === "") {
                     return "Uncategorized";
                 } else {
                     return this.newItemCategory;
@@ -87,8 +97,9 @@
         height: $bottom-bar-height;
         z-index: 5;
         padding-top: $default-distance;
-        form{
-            input, select{
+
+        form {
+            input, select {
                 width: 40%;
                 background: none;
                 border: none;
@@ -98,25 +109,28 @@
             }
         }
 
-        .add-item-btn{
+        .add-item-btn {
             background-color: $brand-yellow;
-            width:$large-distance + $default-distance;
+            width: $large-distance + $default-distance;
             height: $large-distance + $default-distance;
             box-sizing: border-box;
             position: relative;
             border-radius: 50%;
-            .bar{
+
+            .bar {
                 background-color: $background-color;
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                transform: translate(-50%,-50%);
+                transform: translate(-50%, -50%);
             }
-            .bar:first-of-type{
-                height:75%;
-                width:15%;
+
+            .bar:first-of-type {
+                height: 75%;
+                width: 15%;
             }
-            .bar:last-of-type{
+
+            .bar:last-of-type {
                 height: 15%;
                 width: 75%;
             }
