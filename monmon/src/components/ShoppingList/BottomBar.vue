@@ -2,7 +2,17 @@
     <div id="bottom-bar" class="container">
         <div class="wrapper">
             <form class="no-wrap-flex" name="add-item" v-on:submit.prevent="addItem">
-                <input type="text" placeholder="Enter item name" v-model="newItemName">
+<!--                <input type="text" placeholder="Enter item name" v-model="newItemName">-->
+                <input type="text" list="newItemsList" name="newItem" v-model="newItemName" placeholder="Enter item name">
+                <datalist id="newItemsList" name="newItemsList">
+                    <option
+                            v-for="(searchResult,index) in searchResults"
+                            v-bind:value="searchResult"
+                            v-bind:key="index"
+                    >
+                        {{searchResult}}
+                    </option>
+                </datalist>
                 <select v-model="newItemCategory">
                     <option
                             v-for="category in itemCategories"
@@ -31,6 +41,7 @@
             return {
                 newItemName: "",
                 newItemCategory: "",
+                searchResults: [],
             }
         },
         computed: {
@@ -40,7 +51,7 @@
         },
         watch: {
             newItemName : function(){
-                this.search();
+                 this.search();
             },
         },
         methods: {
@@ -58,7 +69,7 @@
             },
             async search(){
                 let response = await search(this.newItemName);
-                console.log(response);
+                this.searchResults = response;
             },
             clearValues() {
                 this.newItemName = "";

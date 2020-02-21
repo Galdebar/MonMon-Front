@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         allShoppingItems: [],
-        categories: {} // this will be replaced with an array of strings once I hook up the google categories
+        categories: {}, // this will be replaced with an array of strings once I hook up the google categories
+        isLoggedIn : true,
     },
     mutations: {
         refreshItemsList(state, payload) {
@@ -105,17 +106,21 @@ export default new Vuex.Store({
             return filteredArray;
         },
         notEmptyCategories: (state, getters) => {
-            let filteredCategories = {};
-            for (let categoryKey in state.categories) {
-                const categoryTitle = state.categories[categoryKey];
-                getters.getItems(false).forEach(item => {
-                    if (item.itemCategory === categoryTitle) {
-                        filteredCategories[categoryKey] = categoryTitle;
+            let filteredCategories = [];
+            for(let categoryIndex in state.categories){
+                const categoryTitle = state.categories[categoryIndex];
+                getters.getItems(false).forEach(item =>{
+                    if(item.itemCategory === categoryTitle){
+                        filteredCategories.push(categoryTitle);
                         return;
                     }
                 });
             }
+
             return filteredCategories;
         },
+        isUserLoggedIn: state => {
+            return state.isLoggedIn;
+        }
     }
 })

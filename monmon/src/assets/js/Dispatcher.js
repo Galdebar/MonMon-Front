@@ -1,7 +1,7 @@
 const defaulturl = "http://localhost:8080/";
 const shoppingItemsPath = "shoppingitems/";
 const categorySearchPath = "categorysearch/";
-const searchPrefix = "s=";
+const searchPrefix = "?search=";
 
 
 export async function getAllShoppingItems(){
@@ -11,7 +11,7 @@ export async function getAllShoppingItems(){
 }
 
 export async function getShoppingItemCategories(){
-    const url = defaulturl + "getShoppingItemCategories";
+    const url = defaulturl + categorySearchPath + "getall";
     let response = await fetch(url);
     return await checkResponse(response);
 }
@@ -71,7 +71,7 @@ export async function search(searchString){
     if(searchString !== ""){
         let response = await fetch(url);
         if(response.ok){
-            return response.text();
+            return await response.json();
         } else return "";
     }
 }

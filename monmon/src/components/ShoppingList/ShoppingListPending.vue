@@ -1,7 +1,7 @@
 <template>
     <div id="shopping-list-pending" >
         <ShoppingListCategory
-                v-for="(categoryName) in itemCategories"
+                v-for="categoryName in itemCategories"
                 v-bind:title="categoryName"
                 v-bind:key="categoryName"
                 @editItem="editItem"
