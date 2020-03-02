@@ -13,7 +13,6 @@
                         v-for="item in itemsInCart"
                         v-bind:shopping-item-d-t-o="item"
                         v-bind:key="item.id"
-                        @refreshList="refreshList"
                 />
             </div>
         </div>
@@ -39,13 +38,11 @@
             }
         },
         methods: {
-            refreshList() {
-            },
             async deleteAllItems() {
-
+                this.$store.dispatch("deleteItemsInCart");
             },
             async unmarkAllItems() {
-
+                this.$store.dispatch("unmarkItemsInCart");
             }
         }
     }

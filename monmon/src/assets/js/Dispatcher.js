@@ -33,7 +33,7 @@ export async function updateItems(itemsArray){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(itemsArray)
     });
-    return response.ok;
+    return await checkResponse(response);
 }
 
 export async function deleteItem(shoppingItemDTO){
@@ -69,10 +69,16 @@ export async function addItem(shoppingItemDTO){
 export async function search(searchString){
     const url = defaulturl + categorySearchPath + searchPrefix + searchString;
     if(searchString !== ""){
-        let response = await fetch(url);
-        if(response.ok){
-            return await response.json();
-        } else return "";
+        const searchObject = {
+            shoppingItemCategory: "",
+            keyword: searchString
+        }
+        let response = await fetch(url,{
+            method:"POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(searchObject)
+        });
+        return await checkResponse(response);
     }
 }
 

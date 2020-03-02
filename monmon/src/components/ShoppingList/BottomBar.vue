@@ -2,25 +2,16 @@
     <div id="bottom-bar" class="container">
         <div class="wrapper">
             <form class="no-wrap-flex" name="add-item" v-on:submit.prevent="addItem">
-<!--                <input type="text" placeholder="Enter item name" v-model="newItemName">-->
                 <input type="text" list="newItemsList" name="newItem" v-model="newItemName" placeholder="Enter item name">
                 <datalist id="newItemsList" name="newItemsList">
                     <option
                             v-for="(searchResult,index) in searchResults"
-                            v-bind:value="searchResult"
+                            v-bind:value="searchResult.keyword"
                             v-bind:key="index"
                     >
-                        {{searchResult}}
+                        {{searchResult.keyword}}
                     </option>
                 </datalist>
-                <select v-model="newItemCategory">
-                    <option
-                            v-for="category in itemCategories"
-                            v-bind:value="category"
-                            v-bind:key="category"
-                    >{{category}}
-                    </option>
-                </select>
                 <button class="add-item-btn">
                     <div class="bar"></div>
                     <div class="bar"></div>
@@ -40,13 +31,7 @@
         data() {
             return {
                 newItemName: "",
-                newItemCategory: "",
                 searchResults: [],
-            }
-        },
-        computed: {
-            itemCategories: function () {
-                return this.$store.getters.itemCategories;
             }
         },
         watch: {
@@ -73,22 +58,14 @@
             },
             clearValues() {
                 this.newItemName = "";
-                this.newItemCategory = "";
             },
             createShoppingItem() {
                 return {
                     itemName: this.newItemName,
-                    itemCategory: this.checkItemCategory(),
+                    itemCategory: "",
                     quantity: 0,
                     comment: "",
                     isInCart: false
-                }
-            },
-            checkItemCategory() {
-                if (this.newItemCategory === "") {
-                    return "Uncategorized";
-                } else {
-                    return this.newItemCategory;
                 }
             },
         }
@@ -111,12 +88,13 @@
 
         form {
             input, select {
-                width: 40%;
+                width: 100%;
                 background: none;
                 border: none;
                 padding: $extra-small-distance;
                 box-sizing: border-box;
                 border-bottom: 1px solid $default-black;
+                margin-right: $default-distance;
             }
         }
 
