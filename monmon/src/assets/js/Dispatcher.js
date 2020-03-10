@@ -2,7 +2,8 @@ const defaulturl = "http://localhost:8080/";
 const shoppingItemsPath = "shoppingitems/";
 const categorySearchPath = "categorysearch/";
 const searchPrefix = "?search=";
-const loginPrefix = "user/login"
+const loginPrefix = "user/login";
+const signUpPrefix = "user/signup";
 
 export async function getAllShoppingItems(authToken) {
     const url = defaulturl + shoppingItemsPath + "getAll";
@@ -95,7 +96,7 @@ export async function search(searchString, authToken) {
         const searchObject = {
             shoppingItemCategory: "",
             keyword: searchString
-        }
+        };
         let response = await fetch(url, {
             method: "POST",
             headers: {
@@ -110,7 +111,7 @@ export async function search(searchString, authToken) {
 
 export async function login(loginRequest) {
     const url = defaulturl + loginPrefix;
-    if (loginRequest != null || loginRequest != undefined) {
+    if (loginRequest != null || loginRequest !== undefined) {
         let response = await fetch(url, {
             method: "POST",
             headers: {
@@ -123,6 +124,20 @@ export async function login(loginRequest) {
     } else return null;
 }
 
+export async function signUp(loginAttempt){
+    const url = defaulturl + signUpPrefix;
+    if(loginAttempt != null || loginAttempt !== undefined){
+        let response = await fetch(url,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(loginAttempt)
+        });
+        return await response.text();
+    } else return null;
+}
+
 export async function loginGithub(){
     const url = "https://github.com/login/oauth/authorize?client_id=b16e35c0b6c5ab110826";
     let response = await fetch(url);
@@ -132,7 +147,6 @@ export async function loginGithub(){
 
 async function checkResponse(response) {
     if (response.ok) {
-        let responseObj = await response.json();
-        return responseObj;
+        return await response.json();
     } else return null;
 }

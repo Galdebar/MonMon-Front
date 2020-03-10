@@ -9,7 +9,8 @@ import {
     deleteItems,
     updateItems,
     login,
-    loginGithub
+    // loginGithub,
+    signUp
 } from "../assets/js/Dispatcher";
 
 Vue.use(Vuex);
@@ -60,13 +61,11 @@ export default new Vuex.Store({
     },
     actions: {
         async loadItemsAndCategories(context) {
-            // context.toggleLoading();
             context.dispatch("toggleLoading");
             let areItemsLoaded = await context.dispatch("refreshItemsList");
             let areCategoriesLoaded = await context.dispatch("refreshCategories");
             if (areItemsLoaded && areCategoriesLoaded) {
                 context.dispatch("toggleLoading");
-                // context.toggleLoading();
             }
         },
         async refreshItemsList(context) {
@@ -90,22 +89,18 @@ export default new Vuex.Store({
 
         },
         async addNewShoppingItem(context, shoppingItemDTO) {
-            // context.toggleLoading();
             context.dispatch("toggleLoading");
             let newShoppingItem = await addItem(shoppingItemDTO, context.state.authToken);
             if (newShoppingItem !== null) {
                 context.commit('addItem', newShoppingItem);
                 context.dispatch("toggleLoading");
-                // context.toggleLoading();
                 return true;
             } else {
                 context.dispatch("toggleLoading");
-                // context.toggleLoading();
                 return false;
             }
         },
         async updateItem(context, shoppingItemDTO) {
-            // context.toggleLoading();
             context.dispatch("toggleLoading");
             const token = context.state.authToken;
             let updatedShoppingItem = await updateItem(shoppingItemDTO, token);
@@ -121,17 +116,14 @@ export default new Vuex.Store({
                     shoppingItemDTO: updatedShoppingItem
                 };
                 context.commit('updateItem', payload);
-                // context.toggleLoading();
                 context.dispatch("toggleLoading");
                 return true;
             } else {
-                // context.toggleLoading();
                 context.dispatch("toggleLoading");
                 return false;
             }
         },
         async deleteItem(context, shoppingItemDTO) {
-            // context.toggleLoading();
             context.dispatch("toggleLoading");
             let isResponseOK = await deleteItem(shoppingItemDTO, context.state.authToken);
             if (isResponseOK) {
@@ -143,17 +135,14 @@ export default new Vuex.Store({
                 });
                 if (targetItemIndex !== undefined) {
                     context.commit("deleteItem", targetItemIndex);
-                    // context.toggleLoading();
                     context.dispatch("toggleLoading");
                     return true;
                 }
             }
-            // context.toggleLoading();
             context.dispatch("toggleLoading");
             return false;
         },
         async deleteItemsInCart(context) {
-            // context.toggleLoading();
             context.dispatch("toggleLoading");
             const allItemsInCart = context.getters.getItems(true);
             let isResponseOk = await deleteItems(allItemsInCart, context.state.authToken);
@@ -168,18 +157,15 @@ export default new Vuex.Store({
                     });
                 });
 
-                // context.toggleLoading();
                 context.dispatch("toggleLoading");
                 return true;
             } else {
-                // context.toggleLoading();
                 context.dispatch("toggleLoading");
                 return false;
             }
 
         },
         async unmarkItemsInCart(context) {
-            // context.toggleLoading();
             context.dispatch("toggleLoading");
             const allItemsInCart = context.getters.getItems(true);
             allItemsInCart.forEach(item => {
@@ -199,34 +185,42 @@ export default new Vuex.Store({
                         }
                     });
                 });
-                // context.toggleLoading();
                 context.dispatch("toggleLoading");
                 return true;
             } else {
-                // context.toggleLoading();
                 context.dispatch("toggleLoading");
                 return false;
             }
         },
+        async registerUser(context, loginAttempt) {
+            context.dispatch("toggleLoading");
+            let responseObj = await signUp(loginAttempt);
+
+            if (responseObj === null || responseObj === undefined) {
+                await context.dispatch("toggleLoading");
+                return null;
+            } else{
+                context.dispatch("toggleLoading");
+                return responseObj;
+            }
+
+        },
         async login(context, loginRequest) {
-            // context.toggleLoading();
             context.dispatch("toggleLoading");
             let responseObj = await login(loginRequest);
-            if (responseObj != undefined) {
+            if (responseObj !== undefined) {
                 context.commit("setUserEmail", responseObj["userEmail"]);
                 context.commit("setAuthToken", responseObj["token"]);
                 context.commit("setIsLoggedIn", true);
-                // context.toggleLoading();
                 context.dispatch("toggleLoading");
                 return true;
-            } else{
-                // context.toggleLoading();
+            } else {
                 context.dispatch("toggleLoading");
+                return false;
             }
         },
-        async githubLogin(){
-            let response = await loginGithub();
-            console.log(response);
+        async githubLogin() {
+            // let response = await loginGithub();
         },
         logOut(context) {
             if (context.state.isLoggedIn) {
@@ -238,18 +232,24 @@ export default new Vuex.Store({
             }
         },
         async toggleLoading(context) {
-            let promise = new Promise((res,) => {
-                setTimeout(() => res("Now it's done!"), 1000)
-            });
-            context.commit(
-                "setIsLoading",
-                !context.state.isLoggedIn
-            );
-            let promiseTimeout = await promise;
-            if(promiseTimeout && context.state.isLoading){
-                context.dispatch("logOut");
-                context.commit("setIsLoading", !context.state.isLoading);
+            if (context.state.isLoading) {
+                context.commit("setIsLoading", false);
+            } else {
+                let promise = new Promise((res,) => {
+                    setTimeout(() => res("Now it's done!"), 10000)
+                });
+                context.commit(
+                    "setIsLoading",
+                    true
+                );
+                let promiseTimeout = await promise;
+                if (promiseTimeout && context.state.isLoading) {
+                    context.dispatch("logOut");
+                    context.commit("setIsLoading", false);
+                }
             }
+
+
         }
     },
     getters: {
@@ -269,7 +269,7 @@ export default new Vuex.Store({
         getPendingItemsByCategory: state => (requestedCategory) => {
             let filteredArray = [];
             state.allShoppingItems.forEach(item => {
-                if (item.itemCategory === requestedCategory && item.isInCart == false) {
+                if (item.itemCategory === requestedCategory && item.isInCart === false) {
                     filteredArray.push(item);
                 }
             });

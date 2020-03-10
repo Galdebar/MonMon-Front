@@ -5,14 +5,14 @@
         </transition>
         <transition name="component-fade" mode="out-in">
             <MainState v-if="isLoggedIn"/>
-            <LoginState v-else/>
+            <LandingState v-else/>
         </transition>
     </div>
 </template>
 
 <script>
     import MainState from "./components/MainState";
-    import LoginState from "./components/LoginState";
+    import LandingState from "./components/LandingState";
     import Loading from "./components/CommonElements/Loading";
     import 'normalize.css';
     import './assets/scss/GlobalComponents.scss'
@@ -21,7 +21,7 @@
         name: 'App',
         components: {
             MainState,
-            LoginState,
+            LandingState,
             Loading
         },
         computed: {

@@ -117,6 +117,8 @@ input:focus, select:focus, textarea:focus{
 }
 
 .no-wrap-flex {
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
@@ -131,19 +133,19 @@ input:focus, select:focus, textarea:focus{
 }
 
 .text-shadow {
-  text-shadow: 0px 1px 2px $default-black;
+  text-shadow: 0 1px 2px $default-black;
 }
 
 .masking-shadow-bottom {
-  -webkit-box-shadow: 0px 10px 10px 0px $background-color;
-  -moz-box-shadow: 0px 10px 10px 0px $background-color;
-  box-shadow: 0px 10px 10px 0px $background-color;
+  -webkit-box-shadow: 0 10px 10px 0 $background-color;
+  -moz-box-shadow: 0 10px 10px 0 $background-color;
+  box-shadow: 0 10px 10px 0 $background-color;
 }
 
 .masking-shadow-top {
   -webkit-box-shadow: 0px -10px 10px 0px $background-color;
   -moz-box-shadow: 0px -10px 10px 0px $background-color;
-  box-shadow: 0px 10px -10px 0px $background-color;
+  box-shadow: 0 10px -10px 0px $background-color;
 }
 
 .separator-bottom-light {
@@ -191,6 +193,76 @@ input:focus, select:focus, textarea:focus{
   left: -100vh;
   transition-duration: background-color $fast-transition;
   transition-duration: left $extra-fast-transition;
+}
+
+.full-screen-yellow{
+  background-color: $brand-yellow;
+  width: 100vw;
+  height: 100vh;
+}
+
+.vertical-flex-wrap{
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.landing-state-view{
+  background-color: $brand-yellow;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: $small-distance;
+    margin-top: $small-distance;
+  }
+
+  .logo {
+    margin-bottom: $extra-large-distance*2;
+  }
+
+  button {
+    margin-top: $default-distance;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: $extra-large-distance;
+
+    input {
+      width: 85%;
+      margin-top: $default-distance;
+      margin-bottom: $default-distance;
+      text-align: center;
+      font-weight: bold;
+
+    }
+
+    input[type=anys]:focus {
+      border: none;
+    }
+
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: $dark-grey;
+      font-weight: normal;
+      opacity: 1; /* Firefox */
+    }
+
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      font-weight: normal;
+      color: $slightly-darker-bg;
+    }
+
+    ::-ms-input-placeholder { /* Microsoft Edge */
+      font-weight: normal;
+      color: $slightly-darker-bg;
+    }
+  }
 }
 
 
