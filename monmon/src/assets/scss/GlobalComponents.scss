@@ -175,7 +175,7 @@ input:focus, select:focus, textarea:focus{
 
 
 #main-color-overlay {
-  background-color: rgba(0, 0, 0, 0.76);
+  background-color: $dark-color-overlay;
   width: 100vw;
   height: 100vh;
   position: absolute;

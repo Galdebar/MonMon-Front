@@ -62,7 +62,6 @@
 </template>
 
 <script>
-    import {deleteItem, updateItem} from "../assets/js/Dispatcher";
 
     export default {
         name: 'EditItem',

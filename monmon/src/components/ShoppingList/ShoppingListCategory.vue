@@ -3,11 +3,14 @@
 
         <h2 class="category-title">{{title}}</h2>
         <div class="container">
-            <ShoppingItemPending @editItem="editItem"
-                                 v-for="item in items"
-                                 v-bind:shopping-item-d-t-o="item"
-                                 v-bind:key="item.id"
-            />
+            <transition-group name="list-complete">
+                <ShoppingItemPending @editItem="editItem"
+                                     v-for="item in items"
+                                     v-bind:shopping-item-d-t-o="item"
+                                     v-bind:key="item.id"
+                                     class="list-complete-item"
+                />
+            </transition-group>
         </div>
 
     </div>
@@ -55,5 +58,17 @@
         transform: translateY(50%);
         border-radius: $extra-small-distance;
         margin-left: $default-distance;
+    }
+
+    .list-complete-item {
+        transition: all $fast-transition;
+    }
+    .list-complete-enter, .list-complete-leave-to{
+        opacity: 0;
+        height: 1px;
+        transform: translateY(30px);
+    }
+    .list-complete-leave-active {
+        position: absolute;
     }
 </style>

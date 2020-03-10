@@ -1,6 +1,6 @@
 <template>
     <div class="standard-margins-vertical separator-bottom-dark">
-        <h3>{{email}}</h3>
+        <h3>{{userEmail}}</h3>
     </div>
 </template>
 
@@ -9,17 +9,22 @@
 
     export default {
         name: 'User',
-        components : {
+        components: {
             // UserIcon
         },
-        data(){
-            return{
-                email: "Galdebar@gmail.com"
+        computed: {
+            userEmail() {
+                return this.$store.getters.getUserEmail;
             }
-        }
+        },
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+    @import "../../assets/scss/Variables";
 
+    h3 {
+        padding-top:$small-distance;
+        padding-bottom: $small-distance;
+    }
 </style>

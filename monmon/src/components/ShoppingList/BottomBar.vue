@@ -53,7 +53,8 @@
 
             },
             async search(){
-                let response = await search(this.newItemName);
+                const token = this.$store.getters.getAuthToken;
+                let response = await search(this.newItemName, token);
                 this.searchResults = response;
             },
             clearValues() {

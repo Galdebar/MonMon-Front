@@ -1,11 +1,17 @@
 <template>
     <div id="shopping-list-main">
-        <ShoppingListPending
-                ref="shoppingListPending"
-                @editItem="editItem"
-        />
-        <ShoppingListInCart
-        />
+        <transition-group name="list-complete">
+            <ShoppingListPending
+                    ref="shoppingListPending"
+                    @editItem="editItem"
+                    class="list-complete-item"
+                    v-bind:key="pendingListKey"
+            />
+            <ShoppingListInCart
+                    class="list-complete-item"
+                    v-bind:key="inCartListKey"
+            />
+        </transition-group>
     </div>
 </template>
 
@@ -23,6 +29,8 @@
         data() {
             return {
                 isOverlayHidden : true,
+                pendingListKey: "pending",
+                inCartListKey: "inCart",
             }
         },
         methods:{
@@ -47,5 +55,17 @@
 
     #shopping-list-main::-webkit-scrollbar {
         display: none;
+    }
+
+
+    .list-complete-item {
+        transition: all $fast-transition;
+    }
+    .list-complete-enter, .list-complete-leave-to{
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    .list-complete-leave-active {
+        position: absolute;
     }
 </style>

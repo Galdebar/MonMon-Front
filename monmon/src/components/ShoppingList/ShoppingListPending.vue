@@ -1,11 +1,14 @@
 <template>
     <div id="shopping-list-pending" >
-        <ShoppingListCategory
-                v-for="categoryName in itemCategories"
-                v-bind:title="categoryName"
-                v-bind:key="categoryName"
-                @editItem="editItem"
-        />
+        <transition-group name="list-complete">
+            <ShoppingListCategory
+                    v-for="categoryName in itemCategories"
+                    v-bind:title="categoryName"
+                    v-bind:key="categoryName"
+                    @editItem="editItem"
+                    class="list-complete-item"
+            />
+        </transition-group>
     </div>
 </template>
 
@@ -35,5 +38,18 @@
 
     #shopping-list-pending{
         margin-top: $top-bar-height;
+
+    }
+
+    .list-complete-item{
+        transition: all $default-transition;
+    }
+
+    .categories-list-enter{
+        opacity: 0;
+        transform: translateX($large-distance);
+    }
+    .list-complete-leave-active{
+        position: absolute;
     }
 </style>

@@ -8,6 +8,7 @@
         </div>
         <User/>
         <HeaderOptions/>
+        <button v-on:click="logOut">Logout</button>
 
     </header>
 </template>
@@ -39,6 +40,9 @@
                     this.isHidden = true;
                     this.$emit("hideOverlay");
                 }
+            },
+            logOut(){
+                this.$store.dispatch("logOut");
             }
         }
 

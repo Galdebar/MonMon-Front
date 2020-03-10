@@ -8,13 +8,14 @@
                     <button v-on:click="unmarkAllItems">Uncheck All</button>
                 </div>
             </div>
-            <div>
+            <transition-group name="list-complete">
                 <ShoppingItemInCart
                         v-for="item in itemsInCart"
                         v-bind:shopping-item-d-t-o="item"
                         v-bind:key="item.id"
+                        class="list-complete-item"
                 />
-            </div>
+            </transition-group>
         </div>
     </div>
 </template>
@@ -70,6 +71,17 @@
 
             background-color: $slightly-darker-bg;
             margin-bottom: $bottom-bar-height + $default-distance;
+        }
+
+        .list-complete-item {
+            transition: all $fast-transition;
+        }
+        .list-complete-enter, .list-complete-leave-to{
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        .list-complete-leave-active {
+            position: absolute;
         }
     }
 </style>

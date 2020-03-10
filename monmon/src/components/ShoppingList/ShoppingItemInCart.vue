@@ -11,8 +11,6 @@
 
 </template>
 <script>
-    import {updateItem} from "../../assets/js/Dispatcher";
-    import {deleteItem} from "../../assets/js/Dispatcher";
 
     export default {
         name: 'ShoppingItemInCart',

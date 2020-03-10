@@ -1,13 +1,19 @@
 <template>
     <div id="app">
-        <MainState v-if="isLoggedIn"/>
-        <LoginState v-else></LoginState>
+        <transition name="component-fade" mode="out-in">
+            <Loading v-if="isLoading"/>
+        </transition>
+        <transition name="component-fade" mode="out-in">
+            <MainState v-if="isLoggedIn"/>
+            <LoginState v-else/>
+        </transition>
     </div>
 </template>
 
 <script>
     import MainState from "./components/MainState";
     import LoginState from "./components/LoginState";
+    import Loading from "./components/CommonElements/Loading";
     import 'normalize.css';
     import './assets/scss/GlobalComponents.scss'
 
@@ -15,15 +21,31 @@
         name: 'App',
         components: {
             MainState,
-            LoginState
+            LoginState,
+            Loading
         },
         computed: {
             isLoggedIn: function(){
                 return this.$store.getters.isUserLoggedIn;
+            },
+            isLoading: function(){
+                return this.$store.getters.isLoading;
             }
         }
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
+    @import "assets/scss/Variables";
+    #app{
+        background-color: $brand-yellow;
+    }
+
+    .component-fade-enter-active, .component-fade-leave-active {
+        transition: opacity $default-transition ease;
+    }
+    .component-fade-enter, .component-fade-leave-to
+        /* .component-fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+    }
 </style>
