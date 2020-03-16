@@ -1,6 +1,5 @@
 @import "Variables";
 
-
 body {
   font-family: "Quicksand", sans-serif;
   background-color: $background-color;
@@ -35,7 +34,6 @@ p {
   color: $default-black;
 }
 
-
 button {
   box-sizing: border-box;
   padding: $small-distance;
@@ -45,7 +43,8 @@ button {
   background: none;
   //background: linear-gradient(145deg, #f0f5fd, #caced4);
   //   background: $background-color;
-  box-shadow: 1px 1px 4px $container-shadow-color, -1px -1px 4px $container-highlight-color;
+  box-shadow: 1px 1px 4px $container-shadow-color,
+    -1px -1px 4px $container-highlight-color;
 }
 
 button.yellow {
@@ -58,7 +57,8 @@ button.white {
   background: $default-white;
   border-color: $default-white;
   color: $brand-yellow;
-  box-shadow: 1px 1px 4px $default-black, -1px -1px 4px $container-highlight-color;
+  box-shadow: 1px 1px 4px $default-black,
+    -1px -1px 4px $container-highlight-color;
 }
 
 button.checkmark img {
@@ -85,8 +85,9 @@ button.round-btn {
   }
 }
 
-
-input, select, textarea {
+input,
+select,
+textarea {
   max-width: 100%;
   background: none;
   border: none;
@@ -95,10 +96,11 @@ input, select, textarea {
   border-bottom: 1px solid $default-black;
 }
 
-input:focus, select:focus, textarea:focus{
+input:focus,
+select:focus,
+textarea:focus {
   border-bottom: 2px solid $brand-yellow;
 }
-
 
 .container-inset {
   border-radius: $small-distance;
@@ -113,7 +115,8 @@ input:focus, select:focus, textarea:focus{
   background: $background-color;
 
   //background: linear-gradient(145deg, #caced4, #f0f5fd);
-  box-shadow: 1px 2px 5px $container-shadow-color, -1px -2px 5px $container-highlight-color;
+  box-shadow: 1px 2px 5px $container-shadow-color,
+    -1px -2px 5px $container-highlight-color;
 }
 
 .no-wrap-flex {
@@ -175,7 +178,6 @@ input:focus, select:focus, textarea:focus{
   box-sizing: border-box;
 }
 
-
 #main-color-overlay {
   background-color: $dark-color-overlay;
   width: 100vw;
@@ -195,32 +197,39 @@ input:focus, select:focus, textarea:focus{
   transition-duration: left $extra-fast-transition;
 }
 
-.full-screen-yellow{
+.full-screen-yellow {
   background-color: $brand-yellow;
   width: 100vw;
   height: 100vh;
 }
 
-.vertical-flex-wrap{
+.vertical-flex-wrap {
   flex-direction: column;
   justify-content: center;
   height: 100%;
 }
 
-.landing-state-view{
+.landing-state-view {
   background-color: $brand-yellow;
   width: 100vw;
   height: 100vh;
   position: relative;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin-bottom: $small-distance;
     margin-top: $small-distance;
   }
 
   .logo {
-    margin-bottom: $extra-large-distance*2;
+    margin-bottom: $extra-large-distance * 2;
   }
+
+
 
   button {
     margin-top: $default-distance;
@@ -240,29 +249,50 @@ input:focus, select:focus, textarea:focus{
       margin-bottom: $default-distance;
       text-align: center;
       font-weight: bold;
-
     }
 
-    input[type=anys]:focus {
+    input[type="anys"]:focus {
       border: none;
     }
 
-    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    ::placeholder {
+      /* Chrome, Firefox, Opera, Safari 10.1+ */
       color: $dark-grey;
       font-weight: normal;
       opacity: 1; /* Firefox */
     }
 
-    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    :-ms-input-placeholder {
+      /* Internet Explorer 10-11 */
       font-weight: normal;
       color: $slightly-darker-bg;
     }
 
-    ::-ms-input-placeholder { /* Microsoft Edge */
+    ::-ms-input-placeholder {
+      /* Microsoft Edge */
       font-weight: normal;
       color: $slightly-darker-bg;
     }
   }
 }
 
+.header-top {
+  padding: $default-distance 0;
+}
 
+.error-msg {
+  background-color: $error-red;
+  width: 100%;
+  padding: $default-distance;
+  box-sizing: border-box;
+  border-radius: $extra-small-distance;
+  margin-bottom: $default-distance;
+
+  li {
+    display: list-item;
+  }
+}
+
+.success-msg {
+  text-align: center;
+}

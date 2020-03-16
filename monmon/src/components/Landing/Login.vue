@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import Logo from "../Header/Logo";
+    import Logo from "../Header/Main/Logo";
 
     export default {
         name: 'LoginState',

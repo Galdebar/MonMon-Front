@@ -10,7 +10,9 @@ import {
     updateItems,
     login,
     // loginGithub,
-    signUp
+    signUp,
+    changeEmail,
+    changePassword
 } from "../assets/js/Dispatcher";
 
 Vue.use(Vuex);
@@ -199,7 +201,7 @@ export default new Vuex.Store({
             if (responseObj === null || responseObj === undefined) {
                 await context.dispatch("toggleLoading");
                 return null;
-            } else{
+            } else {
                 context.dispatch("toggleLoading");
                 return responseObj;
             }
@@ -230,6 +232,20 @@ export default new Vuex.Store({
                 context.commit("setAuthToken", "");
                 context.commit("setIsLoggedIn", false);
             }
+        },
+        async changeEmail(context, newEmail) {
+            let response = await changeEmail(newEmail, context.state.authToken);
+            console.log(response);
+            return response;
+        },
+        async changePassword(context, passwords) {
+            let passwordChangeAttempt = {
+                userEmail: context.state.userEmail,
+                oldPassword: passwords.oldPassword,
+                newPassword: passwords.newPassword
+            }
+            let response = await changePassword(passwordChangeAttempt, context.state.authToken);
+            return response;
         },
         async toggleLoading(context) {
             if (context.state.isLoading) {

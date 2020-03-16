@@ -1,36 +1,37 @@
 <template>
     <header ref="header" v-bind:class="{ hidden:isHidden }">
-        <div class="top no-wrap-flex separator-bottom-dark">
-            <Logo/>
-            <button class="white" v-on:click="moveHeader ">
-                <MenuIcon/>
-            </button>
-        </div>
-        <User/>
-        <HeaderOptions/>
-        <button v-on:click="logOut">Logout</button>
+        <transition name="component-fade" mode="out-in">
+            <HeaderMain
+                    v-on:close-header="moveHeader"
+                    v-on:go-to-settings="toggleSettings"
+                    v-if="!isSettingsOpen"
+            />
+            <Settings
+                    v-else
+                    v-on:close-header="moveHeader"
+                    v-on:close-settings="toggleSettings"
+            />
+        </transition>
+
 
     </header>
 </template>
 
 <script>
-    import Logo from "./Logo.vue";
-    import MenuIcon from 'vue-material-design-icons/Menu.vue';
-    import HeaderOptions from "./HeaderOptions";
-    import User from "./User";
+    import HeaderMain from "./Main/HeaderMain";
+    import Settings from "./Settings/Settings";
 
     export default {
         name: 'Header',
         data() {
             return {
                 isHidden: true,
+                isSettingsOpen: false
             }
         },
         components: {
-            Logo,
-            MenuIcon,
-            User,
-            HeaderOptions
+            HeaderMain,
+            Settings
         },
         methods: {
             moveHeader() {
@@ -38,11 +39,12 @@
                     this.isHidden = false;
                 } else {
                     this.isHidden = true;
+                    this.isSettingsOpen = false;
                     this.$emit("hideOverlay");
                 }
             },
-            logOut(){
-                this.$store.dispatch("logOut");
+            toggleSettings() {
+                this.isSettingsOpen = !this.isSettingsOpen;
             }
         }
 
@@ -59,8 +61,8 @@
         position: absolute;
         padding: 0 $default-distance;
         box-sizing: border-box;
-        top:0;
-        left:0;
+        top: 0;
+        left: 0;
         z-index: $header-z-index;
         transition-duration: $fast-transition;
         background-color: $brand-yellow;

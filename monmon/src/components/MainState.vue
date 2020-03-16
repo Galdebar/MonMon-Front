@@ -43,8 +43,6 @@
             }
         },
         mounted() {
-            // this.$store.dispatch("refreshItemsList");
-            // this.$store.dispatch("refreshCategories");
             this.$store.dispatch("loadItemsAndCategories");
         },
         methods: {

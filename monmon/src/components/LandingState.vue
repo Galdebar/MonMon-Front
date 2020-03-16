@@ -3,10 +3,12 @@
         <transition name="component-fade" mode="out-in">
             <LoginState
                     v-if="showLogin"
+                    key="login"
                     v-on:go-to-registration="changeScreen"
             />
             <SignUpState
                     v-else
+                    key="sign-up"
                     v-on:go-to-login="changeScreen"
             />
         </transition>
@@ -26,7 +28,7 @@
         },
         data() {
             return {
-                showLogin: false
+                showLogin: true
             }
         },
         methods: {
@@ -45,14 +47,16 @@
     }
 
     .component-fade-enter-active, .component-fade-leave-active {
-        transition: all $fast-transition ease;
+        // transition: opacity $fast-transition ease,
+        //             transform $fast-transition ease;
+        transition: all $default-transition ease;
     }
 
     .component-fade-enter, .component-fade-leave-to
         /* .component-fade-leave-active below version 2.1.8 */
     {
         opacity: 0;
-        transform: translateX(100px);
+        // transform: translateX(100px);
     }
 
 

@@ -21,7 +21,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "../../assets/scss/Variables";
+    @import "../../../assets/scss/Variables";
 
     h3 {
         padding-top:$small-distance;

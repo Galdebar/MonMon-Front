@@ -3,7 +3,9 @@ const shoppingItemsPath = "shoppingitems/";
 const categorySearchPath = "categorysearch/";
 const searchPrefix = "?search=";
 const loginPrefix = "user/login";
-const signUpPrefix = "user/signup";
+const signUpPrefix = "user/register";
+const changeEmailPrefix = "user/changeemail";
+const changePasswordPrefix = "user/changepassword";
 
 export async function getAllShoppingItems(authToken) {
     const url = defaulturl + shoppingItemsPath + "getAll";
@@ -90,6 +92,36 @@ export async function addItem(shoppingItemDTO, authToken) {
     return await checkResponse(response);
 }
 
+export async function changeEmail(newEmail, authToken) {
+    const url = defaulturl + changeEmailPrefix;
+    if (newEmail !== "" && authToken !== "") {
+        let response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${authToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newEmail)
+        });
+        return await response.text();
+    } else return null;
+}
+
+export async function changePassword(passwordChangeAttempt, authToken) {
+    const url = defaulturl + changePasswordPrefix;
+    if (passwordChangeAttempt !== "" && authToken !== "") {
+        let response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${authToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(passwordChangeAttempt)
+        });
+        return await response.text();
+    } else return null;
+}
+
 export async function search(searchString, authToken) {
     const url = defaulturl + categorySearchPath + searchPrefix + searchString;
     if (searchString !== "") {
@@ -124,10 +156,10 @@ export async function login(loginRequest) {
     } else return null;
 }
 
-export async function signUp(loginAttempt){
+export async function signUp(loginAttempt) {
     const url = defaulturl + signUpPrefix;
-    if(loginAttempt != null || loginAttempt !== undefined){
-        let response = await fetch(url,{
+    if (loginAttempt != null || loginAttempt !== undefined) {
+        let response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -138,7 +170,7 @@ export async function signUp(loginAttempt){
     } else return null;
 }
 
-export async function loginGithub(){
+export async function loginGithub() {
     const url = "https://github.com/login/oauth/authorize?client_id=b16e35c0b6c5ab110826";
     let response = await fetch(url);
     return await checkResponse(response)
