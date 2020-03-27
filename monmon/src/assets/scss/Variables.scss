@@ -5,7 +5,7 @@ $large-distance: 32px;
 $extra-large-distance: 64px;
 $corner-rounding: 10px;
 
-$default-button-size: 48px;
+$default-button-size: 42px;
 
 $top-bar-height: 64px;
 $bottom-bar-height: 80px;
@@ -25,14 +25,16 @@ $default-transition: 0.5s;
 $fast-transition: 0.2s;
 $extra-fast-transition: 0.1s;
 
-$brand-yellow: #FFBF00;
+// $brand-yellow: #FFBF00;
+$brand-yellow: #FFC628;
 $brand-green-washed-out: #b2e68a;
 $default-white: whitesmoke;
 $default-black: #1f1f1f;
 $background-color: #fafafa;
-$slightly-darker-bg: #cbccd1;
+$slightly-darker-bg: #e6e6e6;
 //$deep-bg-color: #E8EBF2;
-$deep-bg-color: #EFF0F2;
+// $deep-bg-color: #EFF0F2;
+$deep-bg-color: #f1f1f1;
 $light-grey: rgb(197, 197, 197);
 $grey: #878787;
 $dark-grey: #4d4d4d;
@@ -44,3 +46,6 @@ $light-color-overlay: rgba(247, 247, 247, 0.5);
 
 $container-shadow-color: #a8a8a8;
 $container-highlight-color: #ffffff;
+
+$interactive-element-shadow-color: rgb(80, 80, 80);
+$interactive-element-highlight-color: #ffffff;

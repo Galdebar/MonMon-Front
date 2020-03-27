@@ -79,7 +79,7 @@
 
     #bottom-bar {
         position: fixed;
-        background-color: $background-color;
+        background-color: $brand-yellow;
         bottom: 0;
         left: 0;
         width: 100vw;
@@ -100,7 +100,7 @@
         }
 
         .add-item-btn {
-            background-color: $brand-yellow;
+            background-color: $default-white;
             width: $large-distance + $default-distance;
             height: $large-distance + $default-distance;
             box-sizing: border-box;
@@ -108,7 +108,7 @@
             border-radius: 50%;
 
             .bar {
-                background-color: $background-color;
+                background-color: $brand-yellow;
                 position: absolute;
                 top: 50%;
                 left: 50%;

@@ -1,7 +1,6 @@
 const defaulturl = "http://localhost:8080/";
 const shoppingItemsPath = "shoppingitems/";
 const categorySearchPath = "categorysearch/";
-const searchPrefix = "?search=";
 const loginPrefix = "user/login";
 const signUpPrefix = "user/register";
 const changeEmailPrefix = "user/changeemail";
@@ -28,7 +27,7 @@ export async function getShoppingItemCategories(authToken) {
 }
 
 export async function updateItem(shoppingItemDTO, authToken) {
-    const url = defaulturl + shoppingItemsPath + `{id=${shoppingItemDTO.id}`;
+    const url = defaulturl + shoppingItemsPath + "updateitem";
     let response = await fetch(url, {
         method: "PUT",
         headers: {
@@ -41,7 +40,7 @@ export async function updateItem(shoppingItemDTO, authToken) {
 }
 
 export async function updateItems(itemsArray, authToken) {
-    const url = defaulturl + shoppingItemsPath + "updateItems";
+    const url = defaulturl + shoppingItemsPath + "updateitems";
     let response = await fetch(url, {
         method: "PUT",
         headers: {
@@ -54,7 +53,7 @@ export async function updateItems(itemsArray, authToken) {
 }
 
 export async function deleteItem(shoppingItemDTO, authToken) {
-    const url = defaulturl + shoppingItemsPath + `{id=${shoppingItemDTO.id}`;
+    const url = defaulturl + shoppingItemsPath + "deleteitem";
     let response = await fetch(url, {
         method: "DELETE",
         headers: {
@@ -67,7 +66,7 @@ export async function deleteItem(shoppingItemDTO, authToken) {
 }
 
 export async function deleteItems(itemsArray, authToken) {
-    const url = defaulturl + shoppingItemsPath + "deleteItems";
+    const url = defaulturl + shoppingItemsPath + "deleteitems";
     let response = await fetch(url, {
         method: "DELETE",
         headers: {
@@ -80,7 +79,7 @@ export async function deleteItems(itemsArray, authToken) {
 }
 
 export async function addItem(shoppingItemDTO, authToken) {
-    const url = defaulturl + shoppingItemsPath;
+    const url = defaulturl + shoppingItemsPath + "additem";
     let response = await fetch(url, {
         method: "POST",
         headers: {
@@ -123,7 +122,7 @@ export async function changePassword(passwordChangeAttempt, authToken) {
 }
 
 export async function search(searchString, authToken) {
-    const url = defaulturl + categorySearchPath + searchPrefix + searchString;
+    const url = defaulturl + categorySearchPath;
     if (searchString !== "") {
         const searchObject = {
             shoppingItemCategory: "",

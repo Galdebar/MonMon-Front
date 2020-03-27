@@ -43,7 +43,7 @@ button {
   background: none;
   //background: linear-gradient(145deg, #f0f5fd, #caced4);
   //   background: $background-color;
-  box-shadow: 1px 1px 4px $container-shadow-color,
+  box-shadow: 2px 2px 4px $interactive-element-shadow-color,
     -1px -1px 4px $container-highlight-color;
 }
 
@@ -52,6 +52,10 @@ button.yellow {
   background: $brand-yellow;
   color: $default-black;
 }
+
+
+
+
 
 button.white {
   background: $default-white;
@@ -229,11 +233,6 @@ textarea:focus {
     margin-bottom: $extra-large-distance * 2;
   }
 
-
-
-  button {
-    margin-top: $default-distance;
-  }
 
   form {
     display: flex;
