@@ -1,17 +1,16 @@
 <template>
     <div class=button 
     v-bind:class="{mouseover: isMouseOver, clicked: isClicked}"
-
     @mouseover="mouseOver"
     @mouseout="mouseOver"
-    @click.prevent="onClick">
+    @click="onClick">
         <slot></slot>
     </div>
 </template>
 
 <script>
 export default {
-    name:'BtnStandard',
+    name:'BtnSmall',
     props:{
         action: Function,
     },
@@ -43,8 +42,8 @@ export default {
 .button {
   box-sizing: border-box;
   padding: $small-distance;
-  height: $default-button-size;
-  min-width: $default-button-size;
+  height: $small-button-size;
+  min-width: $small-button-size;
   border: none;
   border: 2px solid $brand-yellow;
   border-radius: $extra-small-distance;

@@ -6,7 +6,10 @@
                 <MenuIcon/>
             </BtnStandard>
             <h2>{{title}}</h2>
-            <button>Filter</button>
+            <BtnStandard
+            v-on:action="filter">
+                Filter
+            </BtnStandard>
             
         </div>
     </div>
@@ -30,6 +33,9 @@
         methods: {
             moveHeader() {
                 this.$emit("moveHeader");
+            },
+            filter(){
+                console.log("should open filter options");
             }
         }
     }

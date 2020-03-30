@@ -38,25 +38,35 @@
 							type="password"
 							placeholder="Confirm New Password"
 						/>
-						<button v-on:click.prevent="changePassword">Confirm</button>
+						<BtnStandard v-on:action="changePassword">
+							Confirm
+						</BtnStandard>
 					</form>
 					<div v-else class="no-wrap-flex">
 						<h1>Success!</h1>
-						<button v-on:click="toggleActive">Ok</button>
+						<BtnStandard v-on:action="toggleActive">
+							Ok
+						</BtnStandard>
 					</div>
 				</transition>
 			</div>
 
 			<div v-else>
-				<button v-on:click="toggleActive">Go</button>
+				<BtnStandard v-on:action="toggleActive">
+					Go
+				</BtnStandard>
 			</div>
 		</transition>
 	</div>
 </template>
 
 <script>
+import BtnStandard from "../../CommonElements/BtnStandard"
 export default {
 	name: "ChangePassword",
+	components:{
+		BtnStandard
+	},
 	data() {
 		return {
 			isActive: false,
@@ -65,7 +75,7 @@ export default {
 			confirmNewPassword: "",
 			errorMessages: [],
 			showErrors: false,
-			showSuccess: false,
+			showSuccess: false
 		};
 	},
 	methods: {

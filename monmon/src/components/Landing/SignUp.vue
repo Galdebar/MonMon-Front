@@ -37,17 +37,20 @@
 						v-model="confirmPassword"
 					/>
 					<div class="no-wrap-flex">
-						<button type="button" v-on:click="goToLogin">Back</button>
-
-						<button v-on:click.prevent="register">
+						<BtnStandard v-on:action="goToLogin">
+							Back
+						</BtnStandard>
+						<BtnStandard v-on:action="register">
 							Confirm
-						</button>
+						</BtnStandard>
 					</div>
 				</form>
 				<div v-else class="success-msg">
 					<h1>Successful</h1>
 					<p>A confirmation Email has been sent to {{ savedEmail }}</p>
-					<button>Ok</button>
+					<BtnStandard>
+						Ok
+					</BtnStandard>
 				</div>
 			</transition>
 		</div>
@@ -56,11 +59,13 @@
 
 <script>
 import Logo from "../Header/Main/Logo";
+import BtnStandard from "../CommonElements/BtnStandard";
 
 export default {
 	name: "SignUpState",
 	components: {
-		Logo
+		Logo,
+		BtnStandard
 	},
 	data() {
 		return {

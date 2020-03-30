@@ -1,19 +1,27 @@
 <template>
     <div class="shopping-item default-padding">
-        <button v-on:click="deleteItem">X</button>
+        <BtnStandard v-on:action="deleteItem">
+			X
+		</BtnStandard>
         <div class="text">
             <h3>
                 {{shoppingItemDTO.itemName}}
             </h3>
         </div>
-        <button v-on:click="unmarkAsBought">Y</button>
+        <BtnStandard v-on:action="unmarkAsBought">
+			Y
+		</BtnStandard>
     </div>
 
 </template>
 <script>
+import BtnStandard from "../CommonElements/BtnStandard";
 
     export default {
         name: 'ShoppingItemInCart',
+        components:{
+            BtnStandard
+        },
         props: {
             shoppingItemDTO: Object
         },
