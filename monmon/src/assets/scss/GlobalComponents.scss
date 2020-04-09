@@ -94,11 +94,11 @@ p {
 }
 
 .separator-bottom-light {
-  border-bottom: 1px solid $slightly-darker-bg;
+  border-bottom: 1px solid $default-white;
 }
 
 .separator-bottom-dark {
-  border-bottom: 1px solid $default-black;
+  border-bottom: 2px solid $medium-color-overlay;
 }
 
 .standard-margins-vertical {

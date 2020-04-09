@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { search } from "../../assets/js/Dispatcher";
+import { search } from "../../assets/js/ItemsDispatcher";
 import PlusIcon from "../CommonElements/Icons/PlusIcon";
 
 export default {

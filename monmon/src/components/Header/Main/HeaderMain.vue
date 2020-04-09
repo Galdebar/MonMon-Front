@@ -7,7 +7,7 @@
             </button>
         </div>
         <User/>
-        <HeaderOptions/>
+        <LinkedUsers/>
         <button class="yellow" v-on:click="goToSettings">Settings</button>
     </div>
 </template>
@@ -15,7 +15,7 @@
 <script>
     import MenuIcon from 'vue-material-design-icons/Menu.vue';
     import Logo from "./Logo";
-    import HeaderOptions from "./HeaderOptions";
+    import LinkedUsers from "./LinkedUsers";
     import User from "./User";
 
     export default {
@@ -24,7 +24,7 @@
             Logo,
             MenuIcon,
             User,
-            HeaderOptions
+            LinkedUsers
         },
         methods: {
             closeHeader() {

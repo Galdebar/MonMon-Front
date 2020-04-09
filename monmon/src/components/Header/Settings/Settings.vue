@@ -17,7 +17,7 @@
 			<div class="separator-bottom-dark"></div>
 			<div class="no-wrap-flex">
 				<button class="yellow" v-on:click="logOut">Logout</button>
-                <button class="yellow" v-on:click="deleteUser">Delete User</button>
+				<button class="yellow" v-on:click="deleteUser">Delete User</button>
 			</div>
 		</div>
 	</div>
@@ -37,8 +37,9 @@ export default {
 	},
 	data() {
 		return {
-            isHidden: true,
-            alertText: "User deletion requested! You can cancel it by logging in within 48 hours."
+			isHidden: true,
+			alertText:
+				"User deletion requested! You can cancel it by logging in within 48 hours."
 		};
 	},
 	methods: {
@@ -52,13 +53,8 @@ export default {
 			this.$store.dispatch("logOut");
 		},
 		async deleteUser() {
-            let response = await this.$store.dispatch("deleteUser");
-            console.log(response);
-            if(response.ok){
-                this.$store.dispatch("logOut");
-                alert(this.alertText);
-            }
-        },
+			await this.$store.dispatch("deleteUser");
+		}
 	}
 };
 </script>
@@ -70,17 +66,15 @@ export default {
 	.vertical-flex-wrap {
 		h1 {
 			margin-bottom: $default-distance;
-        }
-        
-        .no-wrap-flex{
-            margin-top: $extra-large-distance;
-        }
+		}
 
+		.no-wrap-flex {
+			margin-top: $extra-large-distance;
+		}
 	}
 
 	.separator-bottom-dark {
 		margin-bottom: $default-distance;
-    }
-    
+	}
 }
 </style>

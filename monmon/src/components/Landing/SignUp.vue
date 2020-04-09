@@ -50,7 +50,7 @@
 					</div>
 				</form>
 				<div v-else class="success-msg">
-					<h1>Successful</h1>
+					<h1>Success!</h1>
 					<p>A confirmation Email has been sent to {{ savedEmail }}</p>
 					<button v-on:click="goToLogin">Ok</button>
 				</div>
