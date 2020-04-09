@@ -4,7 +4,7 @@
 
     @mouseover="mouseOver"
     @mouseout="mouseOver"
-    @click.prevent="onClick">
+    @click="onClick">
         <slot></slot>
     </div>
 </template>

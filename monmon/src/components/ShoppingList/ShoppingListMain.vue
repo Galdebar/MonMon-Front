@@ -8,10 +8,12 @@
                     v-bind:key="pendingListKey"
             />
             <ShoppingListInCart
+                    v-if="!isCartEmpty"
                     class="list-complete-item"
                     v-bind:key="inCartListKey"
             />
         </transition-group>
+        <div id="list-bottom-break"></div>
     </div>
 </template>
 
@@ -33,6 +35,13 @@
                 inCartListKey: "inCart",
             }
         },
+        computed:{
+            isCartEmpty(){
+                if(this.$store.getters.getItems(true).length === 0){
+                    return true;
+                } else return false;
+            }
+        },
         methods:{
             editItem(shoppingItemDTO){
                 this.$emit("editItem", shoppingItemDTO);
@@ -50,6 +59,10 @@
         overflow-y: scroll;
         -ms-overflow-style: none;
         background-color: $deep-bg-color;
+
+        #list-bottom-break{
+            margin-bottom: $extra-large-distance + $large-distance;
+        }
     }
 
 

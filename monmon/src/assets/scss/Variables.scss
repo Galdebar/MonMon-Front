@@ -5,7 +5,6 @@ $large-distance: 32px;
 $extra-large-distance: 64px;
 $corner-rounding: 10px;
 
-$small-button-size: 24px;
 $default-button-size: 42px;
 
 $top-bar-height: 64px;
@@ -25,6 +24,7 @@ $loading-z-index: 20;
 $default-transition: 0.5s;
 $fast-transition: 0.2s;
 $extra-fast-transition: 0.1s;
+$slow-transition: 2s;
 
 // $brand-yellow: #FFBF00;
 $brand-yellow: #FFC628;
@@ -50,3 +50,5 @@ $container-highlight-color: #ffffff;
 
 $interactive-element-shadow-color: rgb(80, 80, 80);
 $interactive-element-highlight-color: #ffffff;
+$interactive-element-shadow-color-lighter: rgb(100, 100, 100);
+$interactive-element-highlight-color-darker:#f3f3f3;

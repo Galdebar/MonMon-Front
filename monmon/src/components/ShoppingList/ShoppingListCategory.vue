@@ -1,7 +1,8 @@
 <template>
     <div class="wrapper shopping-category small-padding">
 
-        <h2 class="category-title">{{title}}</h2>
+        <h2 class="category-title"
+        v-bind:class="itemClassName">{{title}}</h2>
         <div class="container">
             <transition-group name="list-complete">
                 <ShoppingItemPending @editItem="editItem"
@@ -30,6 +31,11 @@
         computed: {
             items: function(){
                 return this.$store.getters.getPendingItemsByCategory(this.title);
+            },
+            itemClassName(){
+                const prefix = "category-color-";
+                let categoryWord = this.title.replace(/ .*/,'').replace(',','').toLowerCase();
+                return prefix+categoryWord;
             }
         },
         methods: {
@@ -52,7 +58,7 @@
 
     .category-title{
         display: inline-block;
-        background-color: $default-black;
+        // background-color: $default-black;
         color: $background-color;
         padding: $small-distance;
         transform: translateY(50%);

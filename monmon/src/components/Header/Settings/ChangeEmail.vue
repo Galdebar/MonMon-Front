@@ -28,35 +28,24 @@
 							v-model="newEmail"
 							placeholder="Something@somewhere.com"
 						/>
-						<BtnStandard v-on:action="changeEmail">
-							Confirm
-						</BtnStandard>
+						<button v-on:click.prevent="changeEmail">Confirm</button>
 					</form>
 					<div v-else class="no-wrap-flex">
 						<h1>Success!</h1>
-						<BtnStandard v-on:action="toggleActive">
-							Ok
-						</BtnStandard>
+						<button v-on:click="toggleActive">Ok</button>
 					</div>
 				</transition>
 			</div>
 
 			<div v-else>
-				<BtnStandard v-on:action="toggleActive">
-					Go
-				</BtnStandard>
+				<button v-on:click="toggleActive">Go</button>
 			</div>
 		</transition>
 	</div>
 </template>
 <script>
-import BtnStandard from "../../CommonElements/BtnStandard";
-
 export default {
 	name: "ChangeEmail",
-	components: {
-		BtnStandard
-	},
 	data() {
 		return {
 			newEmail: "",
@@ -120,7 +109,7 @@ export default {
 				this.showSuccessMessage();
 			} else {
 				this.errorMessages.push(response);
-				this.showErrorMessages();
+				this.showErrorMessages()
 			}
 		},
 		validateEmailFormat: function(email) {

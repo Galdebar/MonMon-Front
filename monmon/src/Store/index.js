@@ -11,6 +11,7 @@ import {
     login,
     // loginGithub,
     signUp,
+    deleteUser,
     changeEmail,
     changePassword
 } from "../assets/js/Dispatcher";
@@ -209,16 +210,17 @@ export default new Vuex.Store({
         },
         async login(context, loginRequest) {
             context.dispatch("toggleLoading");
-            let responseObj = await login(loginRequest);
-            if (responseObj !== undefined) {
+            let response = await login(loginRequest);   
+            if (response.ok) {
+                let responseObj = await response.json();
                 context.commit("setUserEmail", responseObj["userEmail"]);
                 context.commit("setAuthToken", responseObj["token"]);
                 context.commit("setIsLoggedIn", true);
                 context.dispatch("toggleLoading");
-                return true;
+                return response;
             } else {
                 context.dispatch("toggleLoading");
-                return false;
+                return response;
             }
         },
         async githubLogin() {
@@ -233,9 +235,12 @@ export default new Vuex.Store({
                 context.commit("setIsLoggedIn", false);
             }
         },
+        async deleteUser(context){
+            let response = await deleteUser(context.state.authToken);
+            return response;
+        },
         async changeEmail(context, newEmail) {
             let response = await changeEmail(newEmail, context.state.authToken);
-            console.log(response);
             return response;
         },
         async changePassword(context, passwords) {

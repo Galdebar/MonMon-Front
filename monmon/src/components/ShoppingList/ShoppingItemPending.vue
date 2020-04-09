@@ -1,8 +1,8 @@
 <template>
 	<div class="shopping-item default-padding">
-		<BtnSmall v-on:action="editItem">
-			<EditItemIcon/>
-		</BtnSmall>
+		<a v-on:click="editItem">
+			<EditItemIcon></EditItemIcon>
+		</a>
 		<div class="text">
 			<h3>
 				{{ shoppingItemDTO.itemName }}
@@ -15,20 +15,17 @@
 			</h5>
 		</div>
 
-        <BtnSmall v-on:action="markAsBought">
-		</BtnSmall>
+		<button v-on:click="markAsBought" />
 	</div>
 </template>
 <script>
 import EditItemIcon from "../CommonElements/Icons/EditItemIcon";
-import BtnSmall from "../CommonElements/BtnSmall";
 
 export default {
-    name: "ShoppingItemPending",
-    components:{
-        EditItemIcon,
-        BtnSmall
-    },
+	name: "ShoppingItemPending",
+	components: {
+		EditItemIcon
+	},
 	props: {
 		shoppingItemDTO: Object
 	},
@@ -69,14 +66,6 @@ export default {
 	justify-content: flex-start;
 	align-items: center;
 	margin-bottom: $small-distance;
-
-	.edit-btn {
-		height: $default-distance;
-		width: $default-distance;
-		
-
-		
-	}
 
 	.text {
 		margin: 0 $default-distance;

@@ -1,50 +1,44 @@
 <template>
-	<div>
-		<div class="header-top no-wrap-flex separator-bottom-dark">
-			<Logo />
-			<BtnStandard v-on:action="closeHeader">
-				<MenuIcon />
-			</BtnStandard>
-		</div>
-		<User />
-		<HeaderOptions />
-		<BtnStandard v-on:action="goToSettings">
-			Settings
-		</BtnStandard>
-	</div>
+    <div >
+        <div class="header-top no-wrap-flex separator-bottom-dark small-padding">
+            <Logo/>
+            <button class="white" v-on:click="closeHeader">
+                <MenuIcon/>
+            </button>
+        </div>
+        <User/>
+        <HeaderOptions/>
+        <button class="yellow" v-on:click="goToSettings">Settings</button>
+    </div>
 </template>
 
 <script>
-import MenuIcon from "vue-material-design-icons/Menu.vue";
-import Logo from "./Logo";
-import HeaderOptions from "./HeaderOptions";
-import User from "./User";
-import BtnStandard from "../../CommonElements/BtnStandard";
+    import MenuIcon from 'vue-material-design-icons/Menu.vue';
+    import Logo from "./Logo";
+    import HeaderOptions from "./HeaderOptions";
+    import User from "./User";
 
-export default {
-	name: "HeaderMain",
-	components: {
-		Logo,
-		MenuIcon,
-		User,
-        HeaderOptions,
-        BtnStandard
-	},
-	methods: {
-		closeHeader() {
-			this.$emit("close-header");
-		},
-		goToSettings() {
-			this.$emit("go-to-settings");
-		}
-	}
-};
+    export default {
+        name: "HeaderMain",
+        components: {
+            Logo,
+            MenuIcon,
+            User,
+            HeaderOptions
+        },
+        methods: {
+            closeHeader() {
+                this.$emit("close-header");
+            },
+            goToSettings(){
+                this.$emit("go-to-settings");
+            }
+        }
+    }
+
 </script>
 
 <style lang="scss" scoped>
-@import "../../../assets/scss/Variables";
+    @import "../../../assets/scss/Variables";
 
-.top {
-	padding: $default-distance 0;
-}
 </style>

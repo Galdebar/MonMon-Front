@@ -1,15 +1,11 @@
 <template>
     <div id="top-bar" class="container">
-        <div class="wrapper no-wrap-flex small-padding">
-            <BtnStandard class="button-yellow"
-            v-on:action="moveHeader">
+        <div class="wrapper">
+            <button v-on:click="moveHeader" class="yellow">
                 <MenuIcon/>
-            </BtnStandard>
+            </button>
             <h2>{{title}}</h2>
-            <BtnStandard
-            v-on:action="filter">
-                Filter
-            </BtnStandard>
+            <button>Filter</button>
             
         </div>
     </div>
@@ -17,13 +13,11 @@
 
 <script>
     import MenuIcon from 'vue-material-design-icons/Menu.vue';
-    import BtnStandard from '../CommonElements/BtnStandard';
 
     export default {
         name: 'TopBar',
         components: {
             MenuIcon,
-            BtnStandard
         },
         data() {
             return {
@@ -33,9 +27,6 @@
         methods: {
             moveHeader() {
                 this.$emit("moveHeader");
-            },
-            filter(){
-                console.log("should open filter options");
             }
         }
     }
@@ -51,5 +42,10 @@
         left: 0;
         width: 100vw;
         z-index: 5;
+        .wrapper{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 </style>

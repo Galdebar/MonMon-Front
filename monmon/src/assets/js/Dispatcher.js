@@ -3,6 +3,7 @@ const shoppingItemsPath = "shoppingitems/";
 const categorySearchPath = "categorysearch/";
 const loginPrefix = "user/login";
 const signUpPrefix = "user/register";
+const deleteUserPrefix = "user/deleteuser";
 const changeEmailPrefix = "user/changeemail";
 const changePasswordPrefix = "user/changepassword";
 
@@ -106,6 +107,20 @@ export async function changeEmail(newEmail, authToken) {
     } else return null;
 }
 
+export async function deleteUser(authToken){
+    const url = defaulturl + deleteUserPrefix;
+    if (authToken !== "") {
+        let response = await fetch(url, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${authToken}`,
+                "Content-Type": "application/json"
+            }
+        });
+        return await response;
+    } else return null;
+}
+
 export async function changePassword(passwordChangeAttempt, authToken) {
     const url = defaulturl + changePasswordPrefix;
     if (passwordChangeAttempt !== "" && authToken !== "") {
@@ -151,7 +166,7 @@ export async function login(loginRequest) {
             body: JSON.stringify(loginRequest)
         });
 
-        return await checkResponse(response);
+        return response;
     } else return null;
 }
 

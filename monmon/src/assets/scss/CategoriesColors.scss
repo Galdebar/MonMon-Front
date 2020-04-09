@@ -1,0 +1,173 @@
+@import "Variables";
+
+$starting-color: #983f3f;
+$uncategorized-color: #797979;
+$hue-color-shift: -10;
+
+.category-color-uncategorized{
+    background-color: $uncategorized-color;
+}
+
+.category-color-animals{
+    background-color: adjust-hue($starting-color, 0 * $hue-color-shift)
+}
+
+.category-color-apparel{
+    background-color: adjust-hue($starting-color, 1 * $hue-color-shift)
+}
+
+.category-color-arts{
+    background-color: adjust-hue($starting-color, 40 * $hue-color-shift)
+}
+
+.category-color-baby{
+    background-color: adjust-hue($starting-color, 3 * $hue-color-shift)
+}
+
+.category-color-business{
+    background-color: adjust-hue($starting-color, 38 * $hue-color-shift)
+}
+
+.category-color-cameras{
+    background-color: adjust-hue($starting-color, 5 * $hue-color-shift)
+}
+
+.category-color-electronics{
+    background-color: adjust-hue($starting-color, 36 * $hue-color-shift)
+}
+
+.category-color-beverages{
+    background-color: adjust-hue($starting-color, 7 * $hue-color-shift)
+}
+
+.category-color-bakery{
+    background-color: adjust-hue($starting-color, 34 * $hue-color-shift)
+}
+
+.category-color-candied{
+    background-color: adjust-hue($starting-color, 9 * $hue-color-shift)
+}
+
+.category-color-candy{
+    background-color: adjust-hue($starting-color, 32 * $hue-color-shift)
+}
+
+.category-color-condiments{
+    background-color: adjust-hue($starting-color, 11 * $hue-color-shift)
+}
+
+.category-color-cooking{
+    background-color: adjust-hue($starting-color, 30 * $hue-color-shift)
+}
+
+.category-color-dairy{
+    background-color: adjust-hue($starting-color, 13 * $hue-color-shift)
+}
+
+.category-color-dips{
+    background-color: adjust-hue($starting-color, 28 * $hue-color-shift)
+}
+
+.category-color-food{
+    background-color: adjust-hue($starting-color, 15 * $hue-color-shift)
+}
+
+.category-color-frozen{
+    background-color: adjust-hue($starting-color, 26 * $hue-color-shift)
+}
+
+.category-color-fruits{
+    background-color: adjust-hue($starting-color, 17 * $hue-color-shift)
+}
+
+.category-color-grains{
+    background-color: adjust-hue($starting-color, 24 * $hue-color-shift)
+}
+
+.category-color-meat{
+    background-color: adjust-hue($starting-color, 19 * $hue-color-shift)
+}
+
+.category-color-nuts{
+    background-color: adjust-hue($starting-color, 22 * $hue-color-shift)
+}
+
+.category-color-pasta{
+    background-color: adjust-hue($starting-color, 21 * $hue-color-shift)
+}
+
+.category-color-prepared{
+    background-color: adjust-hue($starting-color, 20 * $hue-color-shift)
+}
+
+.category-color-seasonings{
+    background-color: adjust-hue($starting-color, 23 * $hue-color-shift)
+}
+
+.category-color-snack{
+    background-color: adjust-hue($starting-color, 18 * $hue-color-shift)
+}
+
+.category-color-soups{
+    background-color: adjust-hue($starting-color, 25 * $hue-color-shift)
+}
+
+.category-color-tofu{
+    background-color: adjust-hue($starting-color, 16 * $hue-color-shift)
+}
+
+.category-color-tobacco{
+    background-color: adjust-hue($starting-color, 27 * $hue-color-shift)
+}
+
+.category-color-furniture{
+    background-color: adjust-hue($starting-color, 14 * $hue-color-shift)
+}
+
+.category-color-hardware{
+    background-color: adjust-hue($starting-color, 29 * $hue-color-shift)
+}
+
+.category-color-health{
+    background-color: adjust-hue($starting-color, 12 * $hue-color-shift)
+}
+
+.category-color-home{
+    background-color: adjust-hue($starting-color, 31 * $hue-color-shift)
+}
+
+.category-color-luggage{
+    background-color: adjust-hue($starting-color, 10 * $hue-color-shift)
+}
+
+.category-color-mature{
+    background-color: adjust-hue($starting-color, 33 * $hue-color-shift)
+}
+
+.category-color-media{
+    background-color: adjust-hue($starting-color, 8 * $hue-color-shift)
+}
+
+.category-color-office{
+    background-color: adjust-hue($starting-color, 35 * $hue-color-shift)
+}
+
+.category-color-religious{
+    background-color: adjust-hue($starting-color, 6 * $hue-color-shift)
+}
+
+.category-color-software{
+    background-color: adjust-hue($starting-color, 37 * $hue-color-shift)
+}
+
+.category-color-sporting{
+    background-color: adjust-hue($starting-color, 4 * $hue-color-shift)
+}
+
+.category-color-toys{
+    background-color: adjust-hue($starting-color, 39 * $hue-color-shift)
+}
+
+.category-color-vehicles{
+    background-color: adjust-hue($starting-color, 2 * $hue-color-shift)
+}

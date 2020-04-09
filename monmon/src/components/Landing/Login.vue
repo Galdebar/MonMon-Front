@@ -1,9 +1,23 @@
 <template>
 	<div id="login-view" class="landing-state-view">
-		<div class="wrapper no-wrap-flex vertical-flex-wrap">
+		<div class="wrapper vertical-flex-center">
 			<Logo />
 			<h2>Please Log in</h2>
-			<form @submit.prevent="attemptLogin">
+			<transition name="slide-fade">
+				<div v-if="showError" class="error-msg">
+					<h2>Error</h2>
+					<transition-group name="list-complete" tag="ul">
+						<li
+							v-for="msg in errorMessages"
+							v-bind:key="msg"
+							class="list-complete-item"
+						>
+							{{ msg }}
+						</li>
+					</transition-group>
+				</div>
+			</transition>
+			<form class="vertical-flex-center" v-on:submit.prevent="attemptLogin">
 				<input
 					type="email"
 					v-model="email"
@@ -16,47 +30,60 @@
 					name="password"
 					placeholder="Enter password"
 				/>
-				<BtnStandard v-on:action="attemptLogin">
-					Login
-				</BtnStandard>
+				<button class="yellow" v-on:click.prevent="attemptLogin">Login</button>
 			</form>
 			<h4>Don't have an account yet?</h4>
-			<BtnStandard v-on:action="register">
-				Register
-			</BtnStandard>
+			<button class="yellow" v-on:click.prevent="register">Register</button>
 		</div>
 	</div>
 </template>
 
 <script>
 import Logo from "../Header/Main/Logo";
-import BtnStandard from "../CommonElements/BtnStandard";
 
 export default {
 	name: "LoginState",
 	components: {
-		Logo,
-		BtnStandard
+		Logo
 	},
 	data() {
 		return {
 			email: "",
-			password: ""
+			password: "",
+			showError: false,
+			errorMessages: []
 		};
 	},
 	methods: {
 		async attemptLogin() {
+			this.toggleErrorMsg();
 			if (this.email !== "" && this.password !== "") {
 				const loginRequest = {
 					userEmail: this.email,
 					userPassword: this.password
 				};
-				let responseIsOk = await this.$store.dispatch("login", loginRequest);
-				if (!responseIsOk) {
-					console.log("cannot login");
-					//some code to handle unsuccessful loginAttempt;
+				let response = await this.$store.dispatch("login", loginRequest);
+				if (!response.ok) {
+					let responseText = await response.text();
+					console.log(responseText);
+					this.errorMessages.push(responseText);
+					this.toggleErrorMsg();
+				} else {
+					this.clearFields();
 				}
-				this.clearFields();
+			}
+		},
+		toggleErrorMsg() {
+			if (!this.showError) {
+				if (this.errorMessages.length !== 0) {
+					this.showError = true;
+				} else {
+					this.showError = false;
+					this.errorMessages = [];
+				}
+			} else {
+				this.showError = false;
+				this.errorMessages = [];
 			}
 		},
 		// async attemptGithubLogin(){
@@ -74,4 +101,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/scss/Variables";
+
+#login-view {
+	form {
+		margin-bottom: $extra-large-distance;
+	}
+}
+
+.slide-fade-enter-active {
+	transition: all $fast-transition ease;
+}
+
+.slide-fade-leave-active {
+	transition: all $default-transition cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */
+ {
+	transform: translateY(10px);
+	transform: scaleY(0);
+	opacity: 0;
+}
 </style>

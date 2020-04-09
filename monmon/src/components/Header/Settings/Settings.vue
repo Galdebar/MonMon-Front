@@ -1,13 +1,11 @@
 <template>
 	<div id="settings" v-bind:class="{ hidden: isHidden }">
-		<div class="header-top no-wrap-flex separator-bottom-dark">
-            <BtnStandard v-on:action="back">
-				Back
-			</BtnStandard>
+		<div class="header-top no-wrap-flex separator-bottom-dark small-padding">
+			<button v-on:click="back">Back</button>
 			<h1>Settings</h1>
-            <BtnStandard v-on:action="closeMenu">
+			<button class="white" v-on:click="closeMenu">
 				<MenuIcon />
-			</BtnStandard>
+			</button>
 		</div>
 		<div class="vertical-flex-wrap">
 			<h1 class="separator-bottom-dark">Account Settings</h1>
@@ -17,9 +15,10 @@
 			<h3>Change Password</h3>
 			<ChangePassword />
 			<div class="separator-bottom-dark"></div>
-            <BtnStandard v-on:action="logOut">
-				Log Out
-			</BtnStandard>
+			<div class="no-wrap-flex">
+				<button class="yellow" v-on:click="logOut">Logout</button>
+                <button class="yellow" v-on:click="deleteUser">Delete User</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -28,19 +27,18 @@
 import MenuIcon from "vue-material-design-icons/Menu.vue";
 import ChangeEmail from "./ChangeEmail";
 import ChangePassword from "./ChangePassword";
-import BtnStandard from "../../CommonElements/BtnStandard";
 
 export default {
 	name: "Settings",
 	components: {
 		MenuIcon,
 		ChangeEmail,
-        ChangePassword,
-        BtnStandard
+		ChangePassword
 	},
 	data() {
 		return {
-			isHidden: true
+            isHidden: true,
+            alertText: "User deletion requested! You can cancel it by logging in within 48 hours."
 		};
 	},
 	methods: {
@@ -52,7 +50,15 @@ export default {
 		},
 		logOut() {
 			this.$store.dispatch("logOut");
-		}
+		},
+		async deleteUser() {
+            let response = await this.$store.dispatch("deleteUser");
+            console.log(response);
+            if(response.ok){
+                this.$store.dispatch("logOut");
+                alert(this.alertText);
+            }
+        },
 	}
 };
 </script>
@@ -64,15 +70,17 @@ export default {
 	.vertical-flex-wrap {
 		h1 {
 			margin-bottom: $default-distance;
-		}
+        }
+        
+        .no-wrap-flex{
+            margin-top: $extra-large-distance;
+        }
 
-		button:last-of-type {
-			margin-top: $large-distance;
-		}
 	}
 
 	.separator-bottom-dark {
 		margin-bottom: $default-distance;
-	}
+    }
+    
 }
 </style>

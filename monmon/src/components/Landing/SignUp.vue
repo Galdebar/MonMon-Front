@@ -1,6 +1,6 @@
 <template>
 	<div id="sign-up" class="landing-state-view">
-		<div class="wrapper no-wrap-flex vertical-flex-wrap">
+		<div class="wrapper vertical-flex-center">
 			<Logo />
 			<h1>Sign Up</h1>
 			<transition name="slide-fade">
@@ -19,7 +19,12 @@
 			</transition>
 
 			<transition name="component-fade" mode="out-in">
-				<form v-on:submit.prevent="register" v-if="!showSuccess" name="sign-up">
+				<form
+					class="vertical-flex-center"
+					v-on:submit.prevent="register"
+					v-if="!showSuccess"
+					name="sign-up"
+				>
 					<input
 						type="email"
 						placeholder="Email@example.com"
@@ -37,20 +42,17 @@
 						v-model="confirmPassword"
 					/>
 					<div class="no-wrap-flex">
-						<BtnStandard v-on:action="goToLogin">
-							Back
-						</BtnStandard>
-						<BtnStandard v-on:action="register">
+						<button type="button" v-on:click="goToLogin">Back</button>
+
+						<button v-on:click.prevent="register">
 							Confirm
-						</BtnStandard>
+						</button>
 					</div>
 				</form>
 				<div v-else class="success-msg">
 					<h1>Successful</h1>
 					<p>A confirmation Email has been sent to {{ savedEmail }}</p>
-					<BtnStandard>
-						Ok
-					</BtnStandard>
+					<button v-on:click="goToLogin">Ok</button>
 				</div>
 			</transition>
 		</div>
@@ -59,13 +61,11 @@
 
 <script>
 import Logo from "../Header/Main/Logo";
-import BtnStandard from "../CommonElements/BtnStandard";
 
 export default {
 	name: "SignUpState",
 	components: {
-		Logo,
-		BtnStandard
+		Logo
 	},
 	data() {
 		return {
@@ -127,7 +127,7 @@ export default {
 			this.hideErrorMessages();
 		},
 		handleResponse(response) {
-			if (response === "Success") {
+			if (response.toLowerCase().includes("success")) {
 				this.showSuccessMessage();
 			} else {
 				this.errorMessages.push(response);
@@ -170,6 +170,7 @@ export default {
 
 form .no-wrap-flex {
 	width: 85%;
+	margin-top: $default-distance;
 }
 
 .slide-fade-enter-active {
