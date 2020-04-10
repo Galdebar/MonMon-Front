@@ -1,4 +1,4 @@
-import {defaulturl, checkResponse} from "./DispatcherGeneral";
+import {defaulturl} from "./DispatcherGeneral";
 const shoppingItemsPath = "shoppingitems/";
 const categorySearchPath = "categorysearch/";
 const getAllPrefix = "getall";
@@ -15,7 +15,7 @@ export async function getAllShoppingItems(authToken) {
             "Authorization": `Bearer ${authToken}`,
         }
     });
-    return await checkResponse(response);
+    return response;
 }
 
 export async function getShoppingItemCategories(authToken) {
@@ -25,7 +25,7 @@ export async function getShoppingItemCategories(authToken) {
             "Authorization": `Bearer ${authToken}`,
         }
     });
-    return await checkResponse(response);
+    return response;
 }
 
 export async function addItem(shoppingItemDTO, authToken) {
@@ -38,7 +38,7 @@ export async function addItem(shoppingItemDTO, authToken) {
         },
         body: JSON.stringify(shoppingItemDTO)
     });
-    return await checkResponse(response);
+    return response;
 }
 
 export async function updateItem(shoppingItemDTO, authToken) {
@@ -51,7 +51,7 @@ export async function updateItem(shoppingItemDTO, authToken) {
         },
         body: JSON.stringify(shoppingItemDTO)
     });
-    return await checkResponse(response);
+    return response;
 }
 
 export async function updateItems(itemsArray, authToken) {
@@ -64,7 +64,7 @@ export async function updateItems(itemsArray, authToken) {
         },
         body: JSON.stringify(itemsArray)
     });
-    return await checkResponse(response);
+    return response;
 }
 
 export async function deleteItem(shoppingItemDTO, authToken) {
@@ -77,7 +77,7 @@ export async function deleteItem(shoppingItemDTO, authToken) {
         },
         body: JSON.stringify(shoppingItemDTO)
     });
-    return response.ok;
+    return response;
 }
 
 export async function deleteItems(itemsArray, authToken) {
@@ -90,7 +90,7 @@ export async function deleteItems(itemsArray, authToken) {
         },
         body: JSON.stringify(itemsArray)
     });
-    return response.ok;
+    return response;
 }
 
 export async function search(searchString, authToken) {
@@ -108,7 +108,7 @@ export async function search(searchString, authToken) {
         },
         body: JSON.stringify(searchObject),
       });
-      return await checkResponse(response);
+      return response;
     }
   }
 

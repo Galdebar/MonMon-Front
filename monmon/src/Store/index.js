@@ -18,6 +18,7 @@ import {
   getShoppingItemCategories,
   deleteItems,
   updateItems,
+  search,
 } from "../assets/js/ItemsDispatcher";
 
 Vue.use(Vuex);
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     allShoppingItems: [],
     categories: {}, // this will be replaced with an array of strings once I hook up the google categories
     isLoggedIn: false,
+    enableSync: false,
     isLoading: false,
     userEmail: "",
     authToken: "",
@@ -67,6 +69,9 @@ export default new Vuex.Store({
     setIsLoggedIn(state, boolean) {
       state.isLoggedIn = boolean;
     },
+    setEnableSync(state, boolean) {
+      state.enableSync = boolean;
+    },
     setIsLoading(state, boolean) {
       state.isLoading = boolean;
     },
@@ -83,16 +88,39 @@ export default new Vuex.Store({
         context.dispatch("toggleLoading");
       }
     },
+    async timedSync(context) {
+      if (context.state.enableSync) {
+        if (context.state.isLoggedIn && !context.state.isLoading) {
+          let promise = new Promise((res) => {
+            setTimeout(() => res("Now it's done!"), 10000);
+          });
+          let promiseTimeout = await promise;
+
+          if (promiseTimeout && !context.state.isLoading) {
+            console.log("syncing info");
+            context.dispatch("refreshItemsList");
+            context.dispatch("loadLinkedUsers");
+          }
+        }
+        context.dispatch("timedSync");
+      }
+    },
     async refreshItemsList(context) {
-      let shoppingItems = await getAllShoppingItems(context.state.authToken);
+      let response = await getAllShoppingItems(context.state.authToken);
+      let shoppingItems = await context.dispatch(
+        "handleObjectResponse",
+        response
+      );
       if (shoppingItems !== null) {
         context.commit("refreshItemsList", shoppingItems);
         return true;
       } else return false;
     },
     async refreshCategories(context) {
-      let shoppingItemCategories = await getShoppingItemCategories(
-        context.state.authToken
+      let response = await getShoppingItemCategories(context.state.authToken);
+      let shoppingItemCategories = await context.dispatch(
+        "handleObjectResponse",
+        response
       );
       let categoryTitlesArray = [];
       if (shoppingItemCategories !== null) {
@@ -105,17 +133,23 @@ export default new Vuex.Store({
     },
     async loadLinkedUsers(context) {
       let response = await getLinkedUsers(context.state.authToken);
-      context.commit("setLinkedUsers", response);
+      let responseObj = await context.dispatch(
+        "handleObjectResponse",
+        response
+      );
+      context.commit("setLinkedUsers", responseObj);
     },
     async linkUserToCurrent(context, linkUserAttempt) {
       let response = await linkUser(linkUserAttempt, context.state.authToken);
-      return response;
+      let responseText = await context.dispatch("handleTextResponse", response);
+      return responseText;
     },
     async addNewShoppingItem(context, shoppingItemDTO) {
       context.dispatch("toggleLoading");
-      let newShoppingItem = await addItem(
-        shoppingItemDTO,
-        context.state.authToken
+      let response = await addItem(shoppingItemDTO, context.state.authToken);
+      let newShoppingItem = await context.dispatch(
+        "handleObjectResponse",
+        response
       );
       if (newShoppingItem !== null) {
         context.commit("addItem", newShoppingItem);
@@ -129,7 +163,11 @@ export default new Vuex.Store({
     async updateItem(context, shoppingItemDTO) {
       context.dispatch("toggleLoading");
       const token = context.state.authToken;
-      let updatedShoppingItem = await updateItem(shoppingItemDTO, token);
+      let response = await updateItem(shoppingItemDTO, token);
+      let updatedShoppingItem = await context.dispatch(
+        "handleObjectResponse",
+        response
+      );
       if (updatedShoppingItem !== null) {
         let oldItemIndex;
         context.state.allShoppingItems.forEach((item, index) => {
@@ -151,11 +189,12 @@ export default new Vuex.Store({
     },
     async deleteItem(context, shoppingItemDTO) {
       context.dispatch("toggleLoading");
-      let isResponseOK = await deleteItem(
-        shoppingItemDTO,
-        context.state.authToken
+      let response = await deleteItem(shoppingItemDTO, context.state.authToken);
+      let isResponseOk = await context.dispatch(
+        "handleBooleanResponse",
+        response
       );
-      if (isResponseOK) {
+      if (isResponseOk) {
         let targetItemIndex;
         context.state.allShoppingItems.forEach((item, index) => {
           if (item.id === shoppingItemDTO.id) {
@@ -174,9 +213,10 @@ export default new Vuex.Store({
     async deleteItemsInCart(context) {
       context.dispatch("toggleLoading");
       const allItemsInCart = context.getters.getItems(true);
-      let isResponseOk = await deleteItems(
-        allItemsInCart,
-        context.state.authToken
+      let response = await deleteItems(allItemsInCart, context.state.authToken);
+      let isResponseOk = await context.dispatch(
+        "handleBooleanResponse",
+        response
       );
       if (isResponseOk) {
         allItemsInCart.forEach((shoppingItemDTO) => {
@@ -203,9 +243,13 @@ export default new Vuex.Store({
         item.isInCart = false;
       });
       let response = await updateItems(allItemsInCart, context.state.authToken);
+      let responseObj = await context.dispatch(
+        "handleObjectResponse",
+        response
+      );
 
-      if (response !== undefined) {
-        response.forEach((responseItem) => {
+      if (responseObj !== undefined) {
+        responseObj.forEach((responseItem) => {
           context.state.allShoppingItems.forEach((storedItem, index) => {
             if (storedItem.id === responseItem.id) {
               let payloadItem = {
@@ -223,9 +267,15 @@ export default new Vuex.Store({
         return false;
       }
     },
+    async search(context, itemName) {
+        let response = await search(itemName, context.state.authToken);
+        let responseObj = await context.dispatch("handleObjectResponse", response);
+        return responseObj;
+    },
     async registerUser(context, loginAttempt) {
       context.dispatch("toggleLoading");
-      let responseObj = await signUp(loginAttempt);
+      let response = await signUp(loginAttempt);
+      let responseObj = await context.dispatch("handleTextResponse", response);
 
       if (responseObj === null || responseObj === undefined) {
         await context.dispatch("toggleLoading");
@@ -238,6 +288,7 @@ export default new Vuex.Store({
     async login(context, loginRequest) {
       context.dispatch("toggleLoading");
       let response = await login(loginRequest);
+
       if (response.ok) {
         let responseObj = await response.json();
         context.commit("setUserEmail", responseObj["userEmail"]);
@@ -245,6 +296,8 @@ export default new Vuex.Store({
         context.commit("setIsLoggedIn", true);
         context.dispatch("toggleLoading");
         context.dispatch("loadLinkedUsers");
+        context.commit("setEnableSync", true);
+        context.dispatch("timedSync");
         return response;
       } else {
         context.dispatch("toggleLoading");
@@ -261,12 +314,14 @@ export default new Vuex.Store({
         context.commit("setUserEmail", "");
         context.commit("setAuthToken", "");
         context.commit("setIsLoggedIn", false);
+        context.commit("setEnableSync", false);
       }
     },
     async deleteUser(context) {
       context.dispatch("toggleLoading");
       let response = await deleteUser(context.state.authToken);
-      let responseText = await response.text();
+      let responseText = await context.dispatch("handleTextResponse", response);
+
       alert(responseText);
       if (response.ok) {
         context.dispatch("logOut");
@@ -274,7 +329,9 @@ export default new Vuex.Store({
     },
     async changeEmail(context, newEmail) {
       let response = await changeEmail(newEmail, context.state.authToken);
-      return response;
+      let responseText = await context.dispatch("handleTextResponse", response);
+
+      return responseText;
     },
     async changePassword(context, passwords) {
       let passwordChangeAttempt = {
@@ -282,11 +339,46 @@ export default new Vuex.Store({
         oldPassword: passwords.oldPassword,
         newPassword: passwords.newPassword,
       };
+
       let response = await changePassword(
         passwordChangeAttempt,
         context.state.authToken
       );
-      return response;
+      let responseText = await context.dispatch("handleTextResponse", response);
+
+      return responseText;
+    },
+    async handleObjectResponse(context, response) {
+      if (response.ok) {
+        return response.json();
+      }
+      if (response.status === 403) {
+        context.dispatch("logOut");
+        let responseText = response.text();
+        console.log(responseText);
+      }
+    },
+    async handleTextResponse(context, response) {
+      // if(response.ok){
+      //   return response.text();
+      // }
+      if (response.status === 403) {
+        context.dispatch("logOut");
+        let responseText = response.text();
+        console.log(responseText);
+      }
+      return await response.text();
+    },
+    async handleBooleanResponse(context, response) {
+      if (response.ok) {
+        return true;
+      }
+      if (response.status === 403) {
+        context.dispatch("logOut");
+        let responseText = response.text();
+        console.log(responseText);
+      }
+      return false;
     },
     async toggleLoading(context) {
       if (context.state.isLoading) {

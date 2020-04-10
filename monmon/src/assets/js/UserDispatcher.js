@@ -1,4 +1,4 @@
-import { defaulturl, checkResponse } from "./DispatcherGeneral";
+import { defaulturl} from "./DispatcherGeneral";
 const loginPrefix = "user/login";
 const signUpPrefix = "user/register";
 const deleteUserPrefix = "user/deleteuser";
@@ -18,7 +18,7 @@ export async function changeEmail(newEmail, authToken) {
       },
       body: JSON.stringify(newEmail),
     });
-    return await response.text();
+    return response;
   } else return null;
 }
 
@@ -47,7 +47,7 @@ export async function changePassword(passwordChangeAttempt, authToken) {
       },
       body: JSON.stringify(passwordChangeAttempt),
     });
-    return await response.text();
+    return response;
   } else return null;
 }
 
@@ -76,7 +76,7 @@ export async function signUp(loginAttempt) {
       },
       body: JSON.stringify(loginAttempt),
     });
-    return await response.text();
+    return response;
   } else return null;
 }
 
@@ -89,7 +89,7 @@ export async function getLinkedUsers(authToken) {
       "Content-Type": "application/json",
     },
   });
-  return checkResponse(response);
+  return response;
 }
 
 export async function linkUser(linkUserAttempt, authToken) {
@@ -103,8 +103,7 @@ export async function linkUser(linkUserAttempt, authToken) {
       },
       body: JSON.stringify(linkUserAttempt),
     });
-    let responseObj = await response.text();
-    return responseObj;
+    return response;
   } else return null;
 }
 
@@ -112,5 +111,5 @@ export async function loginGithub() {
   const url =
     "https://github.com/login/oauth/authorize?client_id=b16e35c0b6c5ab110826";
   let response = await fetch(url);
-  return await checkResponse(response);
+  return response;
 }

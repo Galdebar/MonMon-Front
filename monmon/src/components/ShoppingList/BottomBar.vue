@@ -12,7 +12,10 @@
 				v-model="newItemName"
 				placeholder="Enter item name"
 			/>
-			<datalist id="newItemsList" name="newItemsList">
+			<datalist 
+			v-if="canShowSuggestions"
+			id="newItemsList" name="newItemsList"
+			>
 				<option
 					v-for="(searchResult, index) in searchResults"
 					v-bind:value="searchResult.keyword"
@@ -29,7 +32,6 @@
 </template>
 
 <script>
-import { search } from "../../assets/js/ItemsDispatcher";
 import PlusIcon from "../CommonElements/Icons/PlusIcon";
 
 export default {
@@ -42,6 +44,13 @@ export default {
 			newItemName: "",
 			searchResults: []
 		};
+	},
+	computed:{
+		canShowSuggestions: function(){
+			if(this.searchResults.length===1 && this.searchResults[0]===this.newItemName){
+				return false;
+			} else return true;
+		}
 	},
 	watch: {
 		newItemName: function() {
@@ -64,9 +73,8 @@ export default {
 			}
 		},
 		async search() {
-			const token = this.$store.getters.getAuthToken;
 			if (this.newItemName.trim() !== "") {
-				let response = await search(this.newItemName, token);
+				let response = await this.$store.dispatch("search", this.newItemName);
 				this.searchResults = response;
 			}
 		},

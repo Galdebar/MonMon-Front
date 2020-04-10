@@ -57,6 +57,8 @@
 
     header {
         height: 100vh;
+        overflow: scroll;
+        -ms-overflow-style: none;
         width: 80vw;
         position: absolute;
         padding: 0 $default-distance;
@@ -69,6 +71,10 @@
         -webkit-box-shadow: 2px 0px 32px 0px rgba(0, 0, 0, 0.75);
         -moz-box-shadow: 2px 0px 32px 0px rgba(0, 0, 0, 0.75);
         box-shadow: 2px 0px 32px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    header::-webkit-scrollbar{
+        display: none;
     }
 
     header.hidden {

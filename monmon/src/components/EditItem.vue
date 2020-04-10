@@ -4,7 +4,7 @@
             <div class="top no-wrap-flex">
                 <button v-on:click="deleteItem">Delete</button>
                 <h1>{{headerTitle}}</h1>
-                <button v-on:click="triggerView">X</button>
+                <button v-on:click="triggerView"><CloseIcon/></button>
             </div>
             <div class="middle">
                 <div id="name" class="section">
@@ -55,16 +55,22 @@
 
             <div class="bottom no-wrap-flex">
                 <button v-on:click="triggerView">Cancel</button>
-                <button v-on:click="updateItem">Save</button>
+                <button v-on:click="updateItem"><TickIcon/></button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import CloseIcon from './CommonElements/Icons/CloseIcon';
+import TickIcon from './CommonElements/Icons/TickIcon';
 
     export default {
         name: 'EditItem',
+        components:{
+            CloseIcon,
+            TickIcon,
+        },
         data() {
             return {
                 headerTitle: 'Edit Item',
