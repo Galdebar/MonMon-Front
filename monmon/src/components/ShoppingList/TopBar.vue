@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import MenuIcon from 'vue-material-design-icons/Menu.vue';
+    import MenuIcon from '../CommonElements/Icons/MenuIcon';
 
     export default {
         name: 'TopBar',

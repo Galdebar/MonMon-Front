@@ -3,7 +3,7 @@
         <div class="header-top no-wrap-flex separator-bottom-dark small-padding">
             <Logo/>
             <button class="white" v-on:click="closeHeader">
-                <MenuIcon/>
+                <CloseIcon/>
             </button>
         </div>
         <User/>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import MenuIcon from 'vue-material-design-icons/Menu.vue';
+    import CloseIcon from '../../CommonElements/Icons/CloseIcon';
     import Logo from "./Logo";
     import LinkedUsers from "./LinkedUsers";
     import User from "./User";
@@ -22,7 +22,7 @@
         name: "HeaderMain",
         components: {
             Logo,
-            MenuIcon,
+            CloseIcon,
             User,
             LinkedUsers
         },

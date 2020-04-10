@@ -1,10 +1,10 @@
 <template>
 	<div id="settings" v-bind:class="{ hidden: isHidden }">
 		<div class="header-top no-wrap-flex separator-bottom-dark small-padding">
-			<button v-on:click="back">Back</button>
+			<button v-on:click="back"><BackIcon/></button>
 			<h1>Settings</h1>
 			<button class="white" v-on:click="closeMenu">
-				<MenuIcon />
+				<CloseIcon />
 			</button>
 		</div>
 		<div class="vertical-flex-wrap">
@@ -24,14 +24,16 @@
 </template>
 
 <script>
-import MenuIcon from "vue-material-design-icons/Menu.vue";
+import CloseIcon from "../../CommonElements/Icons/CloseIcon";
+import BackIcon from "../../CommonElements/Icons/BackIcon";
 import ChangeEmail from "./ChangeEmail";
 import ChangePassword from "./ChangePassword";
 
 export default {
 	name: "Settings",
 	components: {
-		MenuIcon,
+		CloseIcon,
+		BackIcon,
 		ChangeEmail,
 		ChangePassword
 	},

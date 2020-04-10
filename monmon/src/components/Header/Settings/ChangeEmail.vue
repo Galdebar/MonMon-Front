@@ -15,7 +15,7 @@
 			</div>
 		</transition>
 		<transition name="component-fade" move="out-in">
-			<div v-if="isActive">
+			<div   v-if="isActive">
 				<transition name="component-fade" mode="out-in">
 					<form
 						v-on:submit.prevent="changeEmail"
@@ -28,7 +28,7 @@
 							v-model="newEmail"
 							placeholder="Something@somewhere.com"
 						/>
-						<button v-on:click.prevent="changeEmail">Confirm</button>
+						<button v-on:click.prevent="changeEmail"><TickIcon/></button>
 					</form>
 					<div v-else class="no-wrap-flex">
 						<h1>Success!</h1>
@@ -38,14 +38,21 @@
 			</div>
 
 			<div v-else>
-				<button v-on:click="toggleActive">Go</button>
+				<button v-on:click="toggleActive"><ForwardIcon/></button>
 			</div>
 		</transition>
 	</div>
 </template>
 <script>
+import ForwardIcon from '../../CommonElements/Icons/ForwardIcon';
+import TickIcon from '../../CommonElements/Icons/TickIcon';
+
 export default {
 	name: "ChangeEmail",
+	components:{
+		ForwardIcon,
+		TickIcon
+	},
 	data() {
 		return {
 			newEmail: "",
@@ -140,6 +147,9 @@ export default {
 	margin-bottom: $large-distance;
 	padding-top: $default-distance;
 	padding-bottom: $default-distance;
+	form>input{
+		width: 70%;
+	}
 }
 
 .slide-fade-enter-active {

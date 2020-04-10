@@ -38,7 +38,7 @@
 							type="password"
 							placeholder="Confirm New Password"
 						/>
-						<button v-on:click.prevent="changePassword">Confirm</button>
+						<button v-on:click.prevent="changePassword"><TickIcon/></button>
 					</form>
 					<div v-else class="no-wrap-flex">
 						<h1>Success!</h1>
@@ -48,15 +48,23 @@
 			</div>
 
 			<div v-else>
-				<button v-on:click="toggleActive">Go</button>
+				<button v-on:click="toggleActive"><ForwardIcon/></button>
 			</div>
 		</transition>
 	</div>
 </template>
 
 <script>
+import ForwardIcon from '../../CommonElements/Icons/ForwardIcon';
+import TickIcon from '../../CommonElements/Icons/TickIcon';
+
+
 export default {
 	name: "ChangePassword",
+	components:{
+		ForwardIcon,
+		TickIcon
+	},
 	data() {
 		return {
 			isActive: false,

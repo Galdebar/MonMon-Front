@@ -1,6 +1,5 @@
 <template>
-	<div class="menu-icon">
-		<div></div>
+	<div class="back-icon">
 		<div></div>
 		<div></div>
 	</div>
@@ -8,18 +7,25 @@
 <style lang="scss" scoped>
 @import "../../../assets/scss/Variables";
 
-.menu-icon {
+.back-icon {
 	width: $default-distance;
 	height: $default-distance;
+	position: relative;
 	div {
-		width: 100%;
+		width: 70%;
 		height: 20%;
-		margin-bottom: 20%;
 		background-color: $default-black;
+		position: absolute;
 	}
-	
-	div:last-of-type{
-		margin-bottom:0;
+
+	div:first-of-type {
+        top:20%;
+        transform:rotate(-45deg);
+	}
+
+	div:last-of-type {
+        bottom:20%;
+        transform:rotate(45deg);
 	}
 }
 </style>

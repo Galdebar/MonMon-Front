@@ -1,19 +1,25 @@
 <template>
     <div class="shopping-item default-padding">
-        <button v-on:click="deleteItem">X</button>
+        <button v-on:click="deleteItem"><CloseIcon/></button>
         <div class="text">
             <h3>
                 {{shoppingItemDTO.itemName}}
             </h3>
         </div>
-        <button v-on:click="unmarkAsBought">Y</button>
+        <button v-on:click="unmarkAsBought"><TickIcon/></button>
     </div>
 
 </template>
 <script>
+import TickIcon from '../CommonElements/Icons/TickIcon';
+import CloseIcon from "../CommonElements/Icons/CloseIcon";
 
     export default {
         name: 'ShoppingItemInCart',
+        components:{
+            TickIcon,
+            CloseIcon,
+        },
         props: {
             shoppingItemDTO: Object
         },
