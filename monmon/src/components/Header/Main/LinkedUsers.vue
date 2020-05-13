@@ -104,9 +104,18 @@ export default {
 				this.showErrorMessage();
 			}
 		},
-		showSuccessMessage() {
+		async showSuccessMessage() {
 			this.userToLink = "";
 			this.showSuccess = true;
+
+			let promise = new Promise(res => {
+				setTimeout(() => res("Now it's done!"), 3000);
+			});
+			let promiseTimeout = await promise;
+
+			if (promiseTimeout && !this.showSuccess) {
+				this.hideSuccessMessage();
+			}
 		},
 		hideSuccessMessage() {
 			this.showSuccess = false;
@@ -133,11 +142,11 @@ export default {
 
 #linked-users {
 	margin-bottom: $large-distance;
-    padding-bottom: $default-distance;
-    
-    form{
-        width: 85%;
-    }
+	padding-bottom: $default-distance;
+
+	form {
+		width: 85%;
+	}
 
 	.add-item-btn {
 		background-color: $default-white;

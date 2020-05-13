@@ -65,7 +65,6 @@ export default {
 				let response = await this.$store.dispatch("login", loginRequest);
 				if (!response.ok) {
 					let responseText = await response.text();
-					console.log(responseText);
 					this.errorMessages.push(responseText);
 					this.toggleErrorMsg();
 				} else {
