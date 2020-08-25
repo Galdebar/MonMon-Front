@@ -85,7 +85,7 @@ export default {
 			return {
 				itemName: this.newItemName,
 				itemCategory: "",
-				quantity: 0,
+				quantity: 1,
 				comment: "",
 				isInCart: false
 			};

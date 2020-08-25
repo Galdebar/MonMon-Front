@@ -7,7 +7,6 @@
             </button>
         </div>
         <User/>
-        <LinkedUsers/>
         <button class="yellow" v-on:click="goToSettings">Settings</button>
     </div>
 </template>
@@ -15,7 +14,6 @@
 <script>
     import CloseIcon from '../../CommonElements/Icons/CloseIcon';
     import Logo from "./Logo";
-    import LinkedUsers from "./LinkedUsers";
     import User from "./User";
 
     export default {
@@ -24,7 +22,6 @@
             Logo,
             CloseIcon,
             User,
-            LinkedUsers
         },
         methods: {
             closeHeader() {

@@ -4,11 +4,8 @@ import {
   login,
   signUp,
   deleteUser,
-  changeEmail,
   changePassword,
-  getLinkedUsers,
-  linkUser,
-} from "../assets/js/UserDispatcher";
+} from "../assets/js/ListDispatcher";
 
 import {
   getAllShoppingItems,
@@ -16,9 +13,10 @@ import {
   updateItem,
   deleteItem,
   getShoppingItemCategories,
-  deleteItems,
-  updateItems,
+  deleteAllItems,
+  // updateItems,
   search,
+  unmarkAllItems,
 } from "../assets/js/ItemsDispatcher";
 
 Vue.use(Vuex);
@@ -30,9 +28,7 @@ export default new Vuex.Store({
     isLoggedIn: false,
     enableSync: false,
     isLoading: false,
-    userEmail: "",
     authToken: "",
-    linkedUsers: [],
   },
   mutations: {
     refreshItemsList(state, payload) {
@@ -60,9 +56,6 @@ export default new Vuex.Store({
     clearCategories(state) {
       state.categories = {};
     },
-    setUserEmail(state, userEmail) {
-      state.userEmail = userEmail;
-    },
     setAuthToken(state, token) {
       state.authToken = token;
     },
@@ -75,15 +68,12 @@ export default new Vuex.Store({
     setIsLoading(state, boolean) {
       state.isLoading = boolean;
     },
-    setLinkedUsers(state, usersArray) {
-      state.linkedUsers = usersArray;
-    },
   },
   actions: {
     async loadItemsAndCategories(context) {
       context.dispatch("toggleLoading");
-      let areItemsLoaded = await context.dispatch("refreshItemsList");
       let areCategoriesLoaded = await context.dispatch("refreshCategories");
+      let areItemsLoaded = await context.dispatch("refreshItemsList");
       if (areItemsLoaded && areCategoriesLoaded) {
         context.dispatch("toggleLoading");
       }
@@ -99,7 +89,6 @@ export default new Vuex.Store({
           if (promiseTimeout && !context.state.isLoading) {
             console.log("syncing info");
             context.dispatch("refreshItemsList");
-            context.dispatch("loadLinkedUsers");
           }
         }
         context.dispatch("timedSync");
@@ -130,19 +119,6 @@ export default new Vuex.Store({
         context.commit("refreshCategories", categoryTitlesArray);
         return true;
       } else return false;
-    },
-    async loadLinkedUsers(context) {
-      let response = await getLinkedUsers(context.state.authToken);
-      let responseObj = await context.dispatch(
-        "handleObjectResponse",
-        response
-      );
-      context.commit("setLinkedUsers", responseObj);
-    },
-    async linkUserToCurrent(context, linkUserAttempt) {
-      let response = await linkUser(linkUserAttempt, context.state.authToken);
-      let responseText = await context.dispatch("handleTextResponse", response);
-      return responseText;
     },
     async addNewShoppingItem(context, shoppingItemDTO) {
       context.dispatch("toggleLoading");
@@ -212,23 +188,9 @@ export default new Vuex.Store({
     },
     async deleteItemsInCart(context) {
       context.dispatch("toggleLoading");
-      const allItemsInCart = context.getters.getItems(true);
-      let response = await deleteItems(allItemsInCart, context.state.authToken);
-      let isResponseOk = await context.dispatch(
-        "handleBooleanResponse",
-        response
-      );
-      if (isResponseOk) {
-        allItemsInCart.forEach((shoppingItemDTO) => {
-          let targetItemIndex;
-          context.state.allShoppingItems.forEach((item, index) => {
-            if (item.id === shoppingItemDTO.id) {
-              targetItemIndex = index;
-              context.commit("deleteItem", targetItemIndex);
-            }
-          });
-        });
-
+      let response = await deleteAllItems(context.state.authToken);
+      if (response.ok) {
+        context.dispatch("refreshItemsList");
         context.dispatch("toggleLoading");
         return true;
       } else {
@@ -238,11 +200,7 @@ export default new Vuex.Store({
     },
     async unmarkItemsInCart(context) {
       context.dispatch("toggleLoading");
-      const allItemsInCart = context.getters.getItems(true);
-      allItemsInCart.forEach((item) => {
-        item.isInCart = false;
-      });
-      let response = await updateItems(allItemsInCart, context.state.authToken);
+      let response = await unmarkAllItems(context.state.authToken);
       let responseObj = await context.dispatch(
         "handleObjectResponse",
         response
@@ -275,8 +233,7 @@ export default new Vuex.Store({
     async registerUser(context, loginAttempt) {
       context.dispatch("toggleLoading");
       let response = await signUp(loginAttempt);
-      let responseObj = await context.dispatch("handleTextResponse", response);
-
+      let responseObj = await response.json();
       if (responseObj === null || responseObj === undefined) {
         await context.dispatch("toggleLoading");
         return null;
@@ -288,30 +245,23 @@ export default new Vuex.Store({
     async login(context, loginRequest) {
       context.dispatch("toggleLoading");
       let response = await login(loginRequest);
-
-      if (response.ok) {
-        let responseObj = await response.json();
-        context.commit("setUserEmail", responseObj["userEmail"]);
-        context.commit("setAuthToken", responseObj["token"]);
+      let obj = await response.json();
+      if (obj.token !== undefined) {
+        context.commit("setAuthToken", obj.token);
         context.commit("setIsLoggedIn", true);
         context.dispatch("toggleLoading");
-        context.dispatch("loadLinkedUsers");
         context.commit("setEnableSync", true);
-        context.dispatch("timedSync");
-        return response;
+        context.dispatch("loadItemsAndCategories");
+        return obj;
       } else {
         context.dispatch("toggleLoading");
-        return response;
+        return obj;
       }
-    },
-    async githubLogin() {
-      // let response = await loginGithub();
     },
     logOut(context) {
       if (context.state.isLoggedIn) {
         context.commit("clearItems");
         context.commit("clearCategories");
-        context.commit("setUserEmail", "");
         context.commit("setAuthToken", "");
         context.commit("setIsLoggedIn", false);
         context.commit("setEnableSync", false);
@@ -327,15 +277,8 @@ export default new Vuex.Store({
         context.dispatch("logOut");
       }
     },
-    async changeEmail(context, newEmail) {
-      let response = await changeEmail(newEmail, context.state.authToken);
-      let responseText = await context.dispatch("handleTextResponse", response);
-
-      return responseText;
-    },
     async changePassword(context, passwords) {
       let passwordChangeAttempt = {
-        userEmail: context.state.userEmail,
         oldPassword: passwords.oldPassword,
         newPassword: passwords.newPassword,
       };
@@ -354,7 +297,7 @@ export default new Vuex.Store({
       }
       if (response.status === 403) {
         context.dispatch("logOut");
-        let responseText = response.text();
+        let responseText = response.message;
         console.log(responseText);
       }
     },
@@ -364,8 +307,6 @@ export default new Vuex.Store({
       // }
       if (response.status === 403) {
         context.dispatch("logOut");
-        let responseText = response.text();
-        console.log(responseText);
       }
       return await response.text();
     },
@@ -375,8 +316,6 @@ export default new Vuex.Store({
       }
       if (response.status === 403) {
         context.dispatch("logOut");
-        let responseText = response.text();
-        console.log(responseText);
       }
       return false;
     },
@@ -403,7 +342,7 @@ export default new Vuex.Store({
     getItems: (state) => (isInCart) => {
       let filteredArray = [];
       state.allShoppingItems.forEach((item) => {
-        if (item !== undefined && item.isInCart === isInCart) {
+        if (item !== undefined && item.inCart === isInCart) {
           filteredArray.push(item);
         }
       });
@@ -414,7 +353,7 @@ export default new Vuex.Store({
       state.allShoppingItems.forEach((item) => {
         if (
           item.itemCategory === requestedCategory &&
-          item.isInCart === false
+          item.inCart === false
         ) {
           filteredArray.push(item);
         }
@@ -440,14 +379,8 @@ export default new Vuex.Store({
     isLoading: (state) => {
       return state.isLoading;
     },
-    getUserEmail: (state) => {
-      return state.userEmail;
-    },
     getAuthToken: (state) => {
       return state.authToken;
-    },
-    getLinkedUsers: (state) => {
-      return state.linkedUsers;
     },
   },
 });

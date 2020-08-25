@@ -6,7 +6,7 @@
 		<div class="text">
 			<h3>
 				{{ shoppingItemDTO.itemName }}
-				<span v-if="shoppingItemDTO.quantity !== 0">
+				<span v-if="shoppingItemDTO.quantity > 1">
 					{{ shoppingItemDTO.quantity }}
 				</span>
 			</h3>
@@ -37,11 +37,12 @@ export default {
 
 	methods: {
 		editItem() {
+			console.log("should edit item");
 			this.$emit("editItem", this.createShoppingItem());
 		},
 		async markAsBought() {
 			let tempShoppingItem = this.createShoppingItem();
-			tempShoppingItem.isInCart = true;
+			tempShoppingItem.inCart = true;
 			this.$store.dispatch("updateItem", tempShoppingItem);
 		},
 		createShoppingItem() {
@@ -51,7 +52,7 @@ export default {
 				itemCategory: this.shoppingItemDTO.itemCategory,
 				quantity: this.shoppingItemDTO.quantity,
 				comment: this.shoppingItemDTO.comment,
-				isInCart: this.shoppingItemDTO.isInCart
+				inCart: this.shoppingItemDTO.inCart
 			};
 		}
 	}

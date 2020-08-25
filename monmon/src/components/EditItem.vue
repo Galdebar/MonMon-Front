@@ -108,7 +108,7 @@ import TickIcon from './CommonElements/Icons/TickIcon';
                     itemCategory: "",
                     quantity: 0,
                     comment: "",
-                    isInCart: false
+                    inCart: false
                 }
             },
             increaseQuantity() {

@@ -19,8 +19,8 @@
 			</transition>
 			<form class="vertical-flex-center" v-on:submit.prevent="attemptLogin">
 				<input
-					type="email"
-					v-model="email"
+					type="text"
+					v-model="listName"
 					name="email"
 					placeholder="Enter email here"
 				/>
@@ -48,7 +48,7 @@ export default {
 	},
 	data() {
 		return {
-			email: "",
+			listName: "",
 			password: "",
 			showError: false,
 			errorMessages: []
@@ -57,15 +57,15 @@ export default {
 	methods: {
 		async attemptLogin() {
 			this.toggleErrorMsg();
-			if (this.email !== "" && this.password !== "") {
+			if (this.listName !== "" && this.password !== "") {
 				const loginRequest = {
-					userEmail: this.email,
-					userPassword: this.password
+					name: this.listName,
+					password: this.password
 				};
 				let response = await this.$store.dispatch("login", loginRequest);
-				if (!response.ok) {
-					let responseText = await response.text();
-					this.errorMessages.push(responseText);
+				if (response.token === undefined) {
+					console.log(response);
+					this.errorMessages.push(response.message);
 					this.toggleErrorMsg();
 				} else {
 					this.clearFields();
@@ -85,11 +85,8 @@ export default {
 				this.errorMessages = [];
 			}
 		},
-		// async attemptGithubLogin(){
-		//     await this.$store.dispatch("githubLogin");
-		// },
 		clearFields() {
-			this.email = "";
+			this.listName = "";
 			this.password = "";
 		},
 		register() {

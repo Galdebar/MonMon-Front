@@ -26,10 +26,10 @@
 					name="sign-up"
 				>
 					<input
-						type="email"
-						placeholder="Email@example.com"
-						value="user-email"
-						v-model="userEmail"
+						type="text"
+						placeholder="ExampleName"
+						value="list-name"
+						v-model="listName"
 					/>
 					<input
 						type="password"
@@ -51,7 +51,7 @@
 				</form>
 				<div v-else class="success-msg">
 					<h1>Success!</h1>
-					<p>A confirmation Email has been sent to {{ savedEmail }}</p>
+					<p>You can now login</p>
 					<button v-on:click="goToLogin">Ok</button>
 				</div>
 			</transition>
@@ -69,8 +69,8 @@ export default {
 	},
 	data() {
 		return {
-			userEmail: "",
-			savedEmail: "",
+			listName: "",
+			savedListName: "",
 			userPassword: "",
 			confirmPassword: "",
 			showError: false,
@@ -84,10 +84,12 @@ export default {
 			this.hideErrorMessages();
 			if (this.checkInput()) {
 				const loginAttempt = {
-					userEmail: this.userEmail,
-					userPassword: this.userPassword
+					name: this.listName,
+					password: this.userPassword
 				};
 				let response = await this.$store.dispatch("registerUser", loginAttempt);
+				console.log("before handling response");
+				console.log(response);
 				this.handleResponse(response);
 			}
 		},
@@ -98,11 +100,8 @@ export default {
 			if (this.userPassword === "" && this.confirmPassword === "") {
 				this.errorMessages.push("Password fields cannot be empty");
 			}
-			if (this.userEmail === "") {
+			if (this.listName === "") {
 				this.errorMessages.push("Email field cannot be empty");
-			}
-			if (!this.validateEmail(this.userEmail)) {
-				this.errorMessages.push("Invalid Email");
 			}
 
 			if (this.errorMessages.length !== 0) {
@@ -115,7 +114,7 @@ export default {
 			this.$emit("go-to-login");
 		},
 		clearVisibleFields() {
-			this.userEmail = "";
+			this.listName = "";
 			this.userPassword = "";
 			this.confirmPassword = "";
 		},
@@ -123,19 +122,21 @@ export default {
 			this.clearVisibleFields();
 			this.showSuccess = false;
 			this.showError = false;
-			this.savedEmail = "";
+			this.savedListName = "";
 			this.hideErrorMessages();
 		},
 		handleResponse(response) {
-			if (response.toLowerCase().includes("success")) {
+			console.log("handling response");
+			console.log(response);
+			if (response.message.toLowerCase().includes("success")) {
 				this.showSuccessMessage();
 			} else {
-				this.errorMessages.push(response);
+				this.errorMessages.push(response.message);
 				this.showErrorMessage();
 			}
 		},
 		async showSuccessMessage() {
-			this.savedEmail = this.userEmail;
+			this.savedListName = this.listName;
 			this.showSuccess = true;
 			this.clearVisibleFields();
 
@@ -160,7 +161,7 @@ export default {
 		validateEmail: function(email) {
 			let re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 			return re.test(email);
-		}
+		},
 	}
 };
 </script>

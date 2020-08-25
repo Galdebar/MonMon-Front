@@ -7,7 +7,7 @@
 				<CloseIcon />
 			</button>
 		</div>
-		<div class="vertical-flex-wrap">
+		<!-- <div class="vertical-flex-wrap">
 			<h1 class="separator-bottom-dark">Account Settings</h1>
 			<h3>Change Email</h3>
 			<ChangeEmail />
@@ -19,23 +19,23 @@
 				<button class="yellow" v-on:click="logOut">Logout</button>
 				<button class="yellow" v-on:click="deleteUser">Delete User</button>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </template>
 
 <script>
 import CloseIcon from "../../CommonElements/Icons/CloseIcon";
 import BackIcon from "../../CommonElements/Icons/BackIcon";
-import ChangeEmail from "./ChangeEmail";
-import ChangePassword from "./ChangePassword";
+// import ChangeEmail from "./ChangeEmail";
+// import ChangePassword from "./ChangePassword";
 
 export default {
 	name: "Settings",
 	components: {
 		CloseIcon,
 		BackIcon,
-		ChangeEmail,
-		ChangePassword
+		// ChangeEmail,
+		// ChangePassword
 	},
 	data() {
 		return {
