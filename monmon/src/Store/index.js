@@ -3,8 +3,9 @@ import Vuex from "vuex";
 import {
   login,
   signUp,
-  deleteUser,
+  deleteList,
   changePassword,
+  logout
 } from "../assets/js/ListDispatcher";
 
 import {
@@ -260,6 +261,7 @@ export default new Vuex.Store({
     },
     logOut(context) {
       if (context.state.isLoggedIn) {
+        logout(context.state.authToken);
         context.commit("clearItems");
         context.commit("clearCategories");
         context.commit("setAuthToken", "");
@@ -267,13 +269,13 @@ export default new Vuex.Store({
         context.commit("setEnableSync", false);
       }
     },
-    async deleteUser(context) {
+    async deleteList(context) {
+      console.log("should fire from store");
       context.dispatch("toggleLoading");
-      let response = await deleteUser(context.state.authToken);
-      let responseText = await context.dispatch("handleTextResponse", response);
-
-      alert(responseText);
+      let response = await deleteList(context.state.authToken);
       if (response.ok) {
+        let obj = await response.json();
+        alert(obj.message);
         context.dispatch("logOut");
       }
     },
@@ -302,9 +304,6 @@ export default new Vuex.Store({
       }
     },
     async handleTextResponse(context, response) {
-      // if(response.ok){
-      //   return response.text();
-      // }
       if (response.status === 403) {
         context.dispatch("logOut");
       }

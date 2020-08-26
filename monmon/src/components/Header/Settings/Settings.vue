@@ -7,26 +7,22 @@
 				<CloseIcon />
 			</button>
 		</div>
-		<!-- <div class="vertical-flex-wrap">
-			<h1 class="separator-bottom-dark">Account Settings</h1>
-			<h3>Change Email</h3>
-			<ChangeEmail />
-			<div class="separator-bottom-dark"></div>
+		<div class="vertical-flex-wrap">
+			<!-- 
 			<h3>Change Password</h3>
 			<ChangePassword />
-			<div class="separator-bottom-dark"></div>
+			<div class="separator-bottom-dark"></div> -->
 			<div class="no-wrap-flex">
 				<button class="yellow" v-on:click="logOut">Logout</button>
-				<button class="yellow" v-on:click="deleteUser">Delete User</button>
+				<button class="yellow" v-on:click="deleteUser">Delete List</button>
 			</div>
-		</div> -->
+		</div>
 	</div>
 </template>
 
 <script>
 import CloseIcon from "../../CommonElements/Icons/CloseIcon";
 import BackIcon from "../../CommonElements/Icons/BackIcon";
-// import ChangeEmail from "./ChangeEmail";
 // import ChangePassword from "./ChangePassword";
 
 export default {
@@ -34,7 +30,6 @@ export default {
 	components: {
 		CloseIcon,
 		BackIcon,
-		// ChangeEmail,
 		// ChangePassword
 	},
 	data() {
@@ -55,7 +50,7 @@ export default {
 			this.$store.dispatch("logOut");
 		},
 		async deleteUser() {
-			await this.$store.dispatch("deleteUser");
+			await this.$store.dispatch("deleteList");
 		}
 	}
 };

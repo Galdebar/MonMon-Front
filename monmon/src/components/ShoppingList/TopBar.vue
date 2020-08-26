@@ -5,7 +5,6 @@
                 <MenuIcon/>
             </button>
             <h2>{{title}}</h2>
-            <button>Filter</button>
             
         </div>
     </div>
