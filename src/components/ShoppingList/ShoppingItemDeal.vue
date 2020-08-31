@@ -24,11 +24,13 @@ export default {
 			} else return false;
 		},
 		showDeal() {
+			console.log(this.itemDeal);
 			if (
-				this.itemDeal.price === 0 &&
-				this.itemDeal.itemKeyword === "" &&
-				this.itemDeal.itemBrand === "" &&
-				this.itemDeal.shopTitle === ""
+				(this.itemDeal.price === 0 &&
+				this.itemDeal.title === "" &&
+				this.itemDeal.brand === "" &&
+				this.itemDeal.shopTitle === "") ||
+				(this.itemDeal === null || this.itemDeal === undefined)
 			) {
 				return false;
 			} else return true;
