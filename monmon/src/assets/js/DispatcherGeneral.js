@@ -1,4 +1,4 @@
-export const defaulturl = "http://localhost:8080/";
+export const defaulturl = process.env.VUE_APP_BACK_URL;
 
 export async function checkResponse(response) {
     if (response.ok) {

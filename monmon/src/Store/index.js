@@ -5,7 +5,7 @@ import {
   signUp,
   deleteList,
   changePassword,
-  logout
+  logout,
 } from "../assets/js/ListDispatcher";
 
 import {
@@ -28,6 +28,7 @@ export default new Vuex.Store({
     categories: {}, // this will be replaced with an array of strings once I hook up the google categories
     isLoggedIn: false,
     enableSync: false,
+    isSyncing: false,
     isLoading: false,
     authToken: "",
   },
@@ -69,6 +70,9 @@ export default new Vuex.Store({
     setIsLoading(state, boolean) {
       state.isLoading = boolean;
     },
+    toggleIsSyncing(state) {
+      state.isSyncing = !state.isSyncing;
+    },
   },
   actions: {
     async loadItemsAndCategories(context) {
@@ -77,22 +81,26 @@ export default new Vuex.Store({
       let areItemsLoaded = await context.dispatch("refreshItemsList");
       if (areItemsLoaded && areCategoriesLoaded) {
         context.dispatch("toggleLoading");
+        context.dispatch("timedSync");
       }
     },
     async timedSync(context) {
-      if (context.state.enableSync) {
+      if (context.state.enableSync && !context.state.isSyncing) {
         if (context.state.isLoggedIn && !context.state.isLoading) {
+          context.commit("toggleIsSyncing");
           let promise = new Promise((res) => {
             setTimeout(() => res("Now it's done!"), 10000);
           });
           let promiseTimeout = await promise;
 
           if (promiseTimeout && !context.state.isLoading) {
+            // if (promiseTimeout) {
             console.log("syncing info");
             context.dispatch("refreshItemsList");
+            context.commit("toggleIsSyncing");
+            context.dispatch("timedSync");
           }
         }
-        context.dispatch("timedSync");
       }
     },
     async refreshItemsList(context) {
@@ -227,9 +235,12 @@ export default new Vuex.Store({
       }
     },
     async search(context, itemName) {
-        let response = await search(itemName, context.state.authToken);
-        let responseObj = await context.dispatch("handleObjectResponse", response);
-        return responseObj;
+      let response = await search(itemName, context.state.authToken);
+      let responseObj = await context.dispatch(
+        "handleObjectResponse",
+        response
+      );
+      return responseObj;
     },
     async registerUser(context, loginAttempt) {
       context.dispatch("toggleLoading");
@@ -248,6 +259,7 @@ export default new Vuex.Store({
       let response = await login(loginRequest);
       let obj = await response.json();
       if (obj.token !== undefined) {
+        // if (response.ok) {
         context.commit("setAuthToken", obj.token);
         context.commit("setIsLoggedIn", true);
         context.dispatch("toggleLoading");
@@ -297,7 +309,7 @@ export default new Vuex.Store({
       if (response.ok) {
         return response.json();
       }
-      if (response.status === 403) {
+      if (response.status !== 200) {
         context.dispatch("logOut");
         let responseText = response.message;
         console.log(responseText);
@@ -350,10 +362,7 @@ export default new Vuex.Store({
     getPendingItemsByCategory: (state) => (requestedCategory) => {
       let filteredArray = [];
       state.allShoppingItems.forEach((item) => {
-        if (
-          item.itemCategory === requestedCategory &&
-          item.inCart === false
-        ) {
+        if (item.itemCategory === requestedCategory && item.inCart === false) {
           filteredArray.push(item);
         }
       });

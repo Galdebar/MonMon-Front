@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "dotenv-webpack": "^2.0.0",
+    "express": "^4.17.1",
+    "is-obj": "^2.0.0",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.11",
     "vue-material-design-icons": "^4.4.0",

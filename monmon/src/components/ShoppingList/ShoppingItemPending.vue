@@ -10,6 +10,7 @@
 					{{ shoppingItemDTO.quantity }}
 				</span>
 			</h3>
+			<ShoppingItemDeal v-bind:item-deal="shoppingItemDTO.deal"/>
 			<h5 v-bind:class="{ shown: shoppingItemDTO.comment.length > 0 }">
 				{{ shoppingItemDTO.comment }}
 			</h5>
@@ -20,11 +21,13 @@
 </template>
 <script>
 import EditItemIcon from "../CommonElements/Icons/EditItemIcon";
+import ShoppingItemDeal from "..//ShoppingList/ShoppingItemDeal";
 
 export default {
 	name: "ShoppingItemPending",
 	components: {
-		EditItemIcon
+		EditItemIcon,
+		ShoppingItemDeal
 	},
 	props: {
 		shoppingItemDTO: Object

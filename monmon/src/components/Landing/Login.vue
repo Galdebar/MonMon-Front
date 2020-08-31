@@ -56,6 +56,7 @@ export default {
 	},
 	methods: {
 		async attemptLogin() {
+			console.log(process.env.VUE_APP_BACK_URL);
 			this.toggleErrorMsg();
 			if (this.listName !== "" && this.password !== "") {
 				const loginRequest = {
@@ -64,7 +65,6 @@ export default {
 				};
 				let response = await this.$store.dispatch("login", loginRequest);
 				if (response.token === undefined) {
-					console.log(response);
 					this.errorMessages.push(response.message);
 					this.toggleErrorMsg();
 				} else {

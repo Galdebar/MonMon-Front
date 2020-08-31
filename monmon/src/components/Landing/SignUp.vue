@@ -88,8 +88,6 @@ export default {
 					password: this.userPassword
 				};
 				let response = await this.$store.dispatch("registerUser", loginAttempt);
-				console.log("before handling response");
-				console.log(response);
 				this.handleResponse(response);
 			}
 		},
@@ -126,8 +124,6 @@ export default {
 			this.hideErrorMessages();
 		},
 		handleResponse(response) {
-			console.log("handling response");
-			console.log(response);
 			if (response.message.toLowerCase().includes("success")) {
 				this.showSuccessMessage();
 			} else {

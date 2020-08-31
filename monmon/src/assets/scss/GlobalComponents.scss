@@ -109,6 +109,9 @@ p {
 .separator-top-light {
   border-top: 1px solid $default-white;
 }
+.separator-top-dark {
+  border-top: 1px solid $medium-color-overlay;
+}
 
 .default-padding {
   padding: $default-distance;
