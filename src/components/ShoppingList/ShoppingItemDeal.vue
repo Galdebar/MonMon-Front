@@ -24,7 +24,6 @@ export default {
 			} else return false;
 		},
 		showDeal() {
-			console.log(this.itemDeal);
 			if (
 				(this.itemDeal.price === 0 &&
 				this.itemDeal.title === "" &&
