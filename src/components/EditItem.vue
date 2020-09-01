@@ -16,7 +16,7 @@
 
                 <div id="quantity" class="section">
                     <h4>Quantity</h4>
-                    <div class="input">
+                    <div class="input no-wrap-flex">
                         <button v-on:click="decreaseQuantity">-</button>
                         <input
                                 type="number"
@@ -135,12 +135,12 @@ import TickIcon from './CommonElements/Icons/TickIcon';
     }
 
     #editItemView.hidden {
-        left: 150vw;
+        top: -150vh;
         transition-duration: $fast-transition;
     }
 
     .popup-container {
-        width: 80vw;
+        width: 90vw;
         min-height: 90vh;
         box-shadow: none;
         display: grid;
@@ -177,6 +177,7 @@ import TickIcon from './CommonElements/Icons/TickIcon';
 
     .section {
         margin-top: $large-distance;
+        width: 100%;
     }
 
     #name {

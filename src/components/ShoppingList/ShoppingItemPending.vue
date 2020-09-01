@@ -7,7 +7,7 @@
 			<h3>
 				{{ shoppingItemDTO.itemName }}
 				<span v-if="shoppingItemDTO.quantity > 1">
-					{{ shoppingItemDTO.quantity }}
+					x{{ shoppingItemDTO.quantity }}
 				</span>
 			</h3>
 			<ShoppingItemDeal v-bind:item-deal="shoppingItemDTO.deal"/>

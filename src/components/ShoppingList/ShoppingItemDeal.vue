@@ -1,12 +1,11 @@
 <template>
 	<div class="shopping-item-deal">
 		<div class="no-wrap-flex separator-top-dark" v-if="showDeal">
-			<h4>Best deal</h4>
 			<h5>
 				{{ itemDeal.itemBrand }} {{ itemDeal.title }} at
 				{{ itemDeal.shopTitle }}
 			</h5>
-			<h5 v-if="hasPrice">Price: &#8364; {{ itemDeal.price }}</h5>
+			<h5 v-if="hasPrice">&#8364; {{ itemDeal.price }}</h5>
 		</div>
 	</div>
 </template>
@@ -44,7 +43,7 @@ export default {
 .shopping-item-deal {
 	margin-top: $extra-small-distance;
     margin-bottom: $extra-small-distance;
-    h4{
+    h5{
         margin-top: $extra-small-distance;
     }
 }

@@ -33,7 +33,7 @@
 				<button class="yellow" v-on:click.prevent="attemptLogin">Login</button>
 			</form>
 			<h4>Don't have an account yet?</h4>
-			<button class="yellow" v-on:click.prevent="register">Register</button>
+			<button class="yellow" v-on:click.prevent="register">Create List</button>
 		</div>
 	</div>
 </template>
