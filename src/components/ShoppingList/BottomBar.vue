@@ -7,15 +7,13 @@
 		>
 			<input
 				type="text"
+				autocomplete="off"
 				list="newItemsList"
 				name="newItem"
 				v-model="newItemName"
 				placeholder="Enter item name"
 			/>
-			<datalist 
-			v-if="canShowSuggestions"
-			id="newItemsList" name="newItemsList"
-			>
+			<datalist v-if="canShowSuggestions" id="newItemsList" name="newItemsList">
 				<option
 					v-for="(searchResult, index) in searchResults"
 					v-bind:value="searchResult.keyword"
@@ -37,25 +35,28 @@ import PlusIcon from "../CommonElements/Icons/PlusIcon";
 export default {
 	name: "BottomBar",
 	components: {
-		PlusIcon
+		PlusIcon,
 	},
 	data() {
 		return {
 			newItemName: "",
-			searchResults: []
+			searchResults: [],
 		};
 	},
-	computed:{
-		canShowSuggestions: function(){
-			if(this.searchResults.length===1 && this.searchResults[0]===this.newItemName){
+	computed: {
+		canShowSuggestions: function () {
+			if (
+				this.searchResults.length === 1 &&
+				this.searchResults[0] === this.newItemName
+			) {
 				return false;
 			} else return true;
-		}
+		},
 	},
 	watch: {
-		newItemName: function() {
+		newItemName: function () {
 			this.search();
-		}
+		},
 	},
 	methods: {
 		async addItem() {
@@ -87,10 +88,10 @@ export default {
 				itemCategory: "",
 				quantity: 1,
 				comment: "",
-				isInCart: false
+				isInCart: false,
 			};
-		}
-	}
+		},
+	},
 };
 </script>
 
@@ -103,7 +104,7 @@ export default {
 	bottom: $default-distance;
 	right: 0;
 	width: 90vw;
-	// height: $bottom-bar-height;
+	height: $bottom-bar-height;
 	z-index: 5;
 	padding-top: $small-distance;
 	padding-right: $default-distance;
@@ -113,6 +114,9 @@ export default {
 
 	form {
 		flex-direction: row;
+		datalist {
+			display: none;
+		}
 	}
 
 	.add-item-btn {
@@ -122,6 +126,15 @@ export default {
 		box-sizing: border-box;
 		position: relative;
 		border-radius: 50%;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	#bottom-bar {
+		position:static!important;
+		box-shadow: none;
+        z-index: inherit;
+
 	}
 }
 </style>

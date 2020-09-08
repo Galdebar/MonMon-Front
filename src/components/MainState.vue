@@ -6,13 +6,15 @@
 			@triggerOverlay="triggerOverlay"
 			@refreshList="refreshList"
 		/>
-		<TopBar @moveHeader="moveHeader" />
+		<div id="changing-bar">
+			<TopBar @moveHeader="moveHeader" />
+			<BottomBar @refreshList="refreshList" />
+		</div>
 		<div
 			id="main-color-overlay"
 			v-bind:class="{ hidden: !isOverlayShown }"
 		></div>
 		<ShoppingListMain ref="shoppingListMain" @editItem="editItem" />
-		<BottomBar @refreshList="refreshList" />
 	</div>
 </template>
 
@@ -30,12 +32,12 @@ export default {
 		TopBar,
 		ShoppingListMain,
 		BottomBar,
-		EditItem
+		EditItem,
 	},
 	data() {
 		return {
 			isEditingItem: false,
-			isOverlayShown: false
+			isOverlayShown: false,
 		};
 	},
 	mounted() {
@@ -52,7 +54,23 @@ export default {
 		refreshList() {},
 		editItem(shoppingItemDTO) {
 			this.$refs.editItemView.triggerView(shoppingItemDTO);
-		}
-	}
+		},
+	},
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../assets/scss/Variables";
+
+@media only screen and (max-width: 768px) {
+	#changing-bar {
+		width: 100%;
+		box-sizing: border-box;
+		height:$bottom-bar-height;
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+</style>
