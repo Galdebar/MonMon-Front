@@ -20,6 +20,11 @@ import {
   unmarkAllItems,
 } from "../assets/js/ItemsDispatcher";
 
+import {
+  attachDealsToShoppingItems,
+  attachDealToShoppingItem
+} from "../assets/js/DealsDispatcher";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -110,9 +115,21 @@ export default new Vuex.Store({
         response
       );
       if (shoppingItems !== null) {
-        context.commit("refreshItemsList", shoppingItems);
+        let updatedShoppingItems = await context.dispatch(
+          "attachDeals",
+          shoppingItems
+        );
+        context.commit("refreshItemsList", updatedShoppingItems);
         return true;
       } else return false;
+    },
+    async attachDeals(context, shoppingItems){
+      let response = await attachDealsToShoppingItems(shoppingItems);
+      let updatedItems = await context.dispatch(
+        "handleObjectResponse",
+        response
+      )
+      return updatedItems;
     },
     async refreshCategories(context) {
       let response = await getShoppingItemCategories(context.state.authToken);
@@ -129,6 +146,15 @@ export default new Vuex.Store({
         return true;
       } else return false;
     },
+    async attachDeal(context, shoppingItem){
+      console.log("trying to attach deals")
+      let response = await attachDealToShoppingItem(shoppingItem);
+      let updatedItems = await context.dispatch(
+        "handleObjectResponse",
+        response
+      )
+      return updatedItems;
+    },
     async addNewShoppingItem(context, shoppingItemDTO) {
       context.dispatch("toggleLoading");
       let response = await addItem(shoppingItemDTO, context.state.authToken);
@@ -137,7 +163,8 @@ export default new Vuex.Store({
         response
       );
       if (newShoppingItem !== null) {
-        context.commit("addItem", newShoppingItem);
+        let itemWithDeal = await context.dispatch("attachDeal",newShoppingItem)
+        context.commit("addItem", itemWithDeal);
         context.dispatch("toggleLoading");
         return true;
       } else {
@@ -154,15 +181,16 @@ export default new Vuex.Store({
         response
       );
       if (updatedShoppingItem !== null) {
+        let itemWithDeal = await context.dispatch("attachDeal", updatedShoppingItem)
         let oldItemIndex;
         context.state.allShoppingItems.forEach((item, index) => {
-          if (item.id === updatedShoppingItem.id) {
+          if (item.id === itemWithDeal.id) {
             oldItemIndex = index;
           }
         });
         let payload = {
           oldItemIndex: oldItemIndex,
-          shoppingItemDTO: updatedShoppingItem,
+          shoppingItemDTO: itemWithDeal,
         };
         context.commit("updateItem", payload);
         context.dispatch("toggleLoading");
